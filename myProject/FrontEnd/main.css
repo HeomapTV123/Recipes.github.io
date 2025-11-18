@@ -1,0 +1,251 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fffaf5;
+    background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+    color: #333;
+}
+
+/* --- Top nav (logo + search + login) --- */
+.nav-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff3e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 15px 40px;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    width: 450px;
+    padding: 12px 18px;
+    border-radius: 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.search:focus-within {
+    box-shadow: 0 0 8px rgba(255,100,50,0.5);
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 16px;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: rgba(0,0,0,0.4);
+}
+
+.login {
+    display: flex;
+    gap: 12px;
+}
+
+.login div {
+    padding: 10px 18px;
+    border: 1px solid #e32a2a;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login a {
+    text-decoration: none;
+    color: #e32a2a;
+    font-weight: 600;
+}
+
+.login div:hover {
+    background-color: #e32a2a;
+}
+
+.login div:hover a {
+    color: white;
+}
+
+/* --- Menu bar --- */
+.nav-select {
+    background-color: #fff7f0;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    padding: 10px 40px;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu > li > a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu > li > a:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+/* --- Dropdown styling --- */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background-color: #fff;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 10;
+    animation: fadeIn 0.25s ease-in;
+}
+
+.dropdown li a {
+    display: block;
+    padding: 10px 18px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown li a:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+/* --- Show dropdown on hover --- */
+.menu li:hover .dropdown {
+    display: block;
+}
+
+/* --- Animation --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   RECIPE SLIDER CONTAINER
+   ========================== */
+.recipe-slider-section {
+    position: relative;
+    padding: 30px 50px;
+}
+
+.slider-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #d43f3a;
+}
+
+/* Slider wrapper */
+.recipe-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-behavior: smooth;
+    padding-bottom: 15px;
+}
+
+.recipe-slider::-webkit-scrollbar {
+    display: none; /* hide scrollbar */
+}
+
+/* Recipe card */
+.recipe-card {
+    min-width: 260px;
+    max-width: 260px;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    transition: 0.3s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Image */
+.recipe-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Text info */
+.recipe-info {
+    margin-top: 10px;
+}
+
+.recipe-info h3 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.recipe-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Slider buttons */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #e32a2a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.slider-btn:hover {
+    background: #c92525;
+}
+
+.slider-btn.left {
+    left: 10px;
+}
+
+.slider-btn.right {
+    right: 10px;
+}
+
+
