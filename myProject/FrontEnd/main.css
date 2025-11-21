@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -249,3 +255,46 @@ body {
 }
 
 
+/* Login Page */
+
+.user-icon {
+    width: 16px;
+}
+
+.login-page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.login-title h2 {
+    color: orangered;
+    font-size: xxx-large;
+    font-weight: 800;
+    padding-bottom: 10px;
+}
+
+.login-title p {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.login-title p emp{
+    color: orangered;
+    font-weight: bolder;
+}
+
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+}
