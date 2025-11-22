@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
+const router = require("./routes/auth");
+
 require("dotenv").config({ path: '.env'});
 
 const app = express();
@@ -192,6 +194,8 @@ app.get('/recipes/category/:name', (req, res) => {
     });
 });
 
+
+    app.use("/auth", router);
 })();
 
 // ================================
