@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2');
+const connectDB = require('./config/db');
 const cors = require('cors');
 require("dotenv").config({ path: '.env'});
 
@@ -7,23 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MySQL connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Bebovien@123',
-    database: 'recipetine'
-});
+let db; // global DB connection
 
-// Connect to DB
-db.connect(err => {
-    if (err) {
-        console.error('❌ Database connection failed:', err);
-        return;
-    }
-    console.log('✅ Connected to MySQL');
-});
+(async () => { 
 
+    db = await connectDB();
 // ================================
 // 1️⃣ GET ALL RECIPES
 // ================================
@@ -204,6 +192,7 @@ app.get('/recipes/category/:name', (req, res) => {
     });
 });
 
+})();
 
 // ================================
 // START SERVER
