@@ -1,3 +1,9 @@
+// Login Form 
+const loginForm = document.getElementById("loginForm");
+
+// Sign Up Form
+const signUpForm = document.getElementById("signUpForm");
+
 // Load recipes into a specific slider
 function loadCategory(categoryName, sliderId) {
     fetch(`http://localhost:5000/recipes/category/${categoryName}`)
@@ -44,12 +50,61 @@ document.querySelectorAll(".slider-btn").forEach(btn => {
     });
 });
 
-// Sign Up Button
-const signUpForm = document.getElementById("signUpForm");
-
-signUpForm.addEventListener("submit", async function(e) {
+// If login form exists, then perform login function
+if(loginForm) {
+loginForm.addEventListener("submit", async function(e) {
     e.preventDefault();
 
+    const usernameLogin = document.getElementById("usernameLogin").value.trim(); 
+    const passwordLogin = document.getElementById("passwordLogin").value.trim(); 
+
+    const usernameLoginError = document.getElementById("usernameLoginError");
+    const passwordLoginError = document.getElementById("passwordLoginError");
+    
+    let isEmpty = false;
+
+    if(usernameLogin == "" || passwordLogin == "") {
+            usernameLoginError.innerHTML = `
+            <p style="color:red; margin-left: 5px">Username field cannot be empty</p>
+            `;
+            setTimeout(() => {
+                usernameLoginError.innerHTML = "";
+            }, 3000);
+            passwordLoginError.innerHTML = `
+            <p style="color:red; margin-left: 5px">Password field cannot be empty</p>
+            `;
+            setTimeout(() => {
+                passwordLoginError.innerHTML = "";
+            }, 3000);
+            isEmpty = true;
+    }
+
+    if(isEmpty) return;
+
+    const response = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json" 
+        },
+        body: JSON.stringify({
+            name: usernameLogin,
+            password_hash: passwordLogin
+        })
+    });
+
+    const result = await response.json();
+    if(result) {
+        window.location.href = "./mainAfterLogin.html";
+    }
+
+    console.log(result);
+});
+}
+
+// if signUpForm exists then perform sign up function
+if(signUpForm) {
+signUpForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
     
     const usernameInput = document.getElementById("usernameInput");
     const emailInput = document.getElementById("emailInput");
@@ -65,9 +120,6 @@ signUpForm.addEventListener("submit", async function(e) {
     const passwordEl = document.getElementById("passwordError");
     const emailEl = document.getElementById("emailError");
 
-    usernameEl.innerHTML = "";
-    emailEl.innerHTML = "";
-    passwordEl.innerHTML = "";
 
         if(username == "" || email == "" || password == "") {
             usernameEl.innerHTML = `
@@ -114,4 +166,6 @@ signUpForm.addEventListener("submit", async function(e) {
     console.log(result);
     
 });
+}
+
 

@@ -23,19 +23,19 @@
         </div>
 
         <div class="login-form-container">
-            <form action="">
+            <form action="" id="loginForm">
                 <div class="input-box">
                     <label for="username"></label>
                     <img src="/myProject/login/user.png" class="user-icon">
-                    <input type="text"class="username" name="username" id="username" aria-describedby="helpId" placeholder="Enter Username" required>
+                    <input type="text"class="username" name="username" id="usernameLogin" aria-describedby="helpId" placeholder="Enter Username">
                 </div>
-                
+                <div id="usernameLoginError"></div> 
                 <div class="input-box">
                     <label for="password"></label>
                     <img src="/myProject/login/password.png" class="password-icon">
-                    <input type="password" class="password" name="" id="" placeholder="Password" required/>
+                    <input type="password" class="password" name="" id="passwordLogin" placeholder="Password">
                 </div>
-                
+                <div id="passwordLoginError"></div>
                 <div class="submit-box">
                      <button type="submit" class="login-btn">Login</button>
                 </div>
@@ -61,6 +61,6 @@
         </div>
         </div>
     </div>
-
+    <script src="../js/script.js"></script>
 </body>
 </html>
