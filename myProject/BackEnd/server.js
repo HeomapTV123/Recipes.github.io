@@ -3,8 +3,8 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const router = require("./routes/auth");
 
-require("dotenv").config({ path: '.env'});
-
+// require("dotenv").config({ path: '.env'});
+// require("dotenv").config({path: './env'});
 const app = express();
 app.use(cors());
 app.use(express.json());
