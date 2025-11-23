@@ -192,7 +192,7 @@ app.get('/recipes/category/:name', (req, res) => {
     });
 });
 
-
+    // All the functions in auth.js 
     app.use("/auth", router);
 })();
 

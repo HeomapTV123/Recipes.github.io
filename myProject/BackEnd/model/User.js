@@ -16,6 +16,16 @@ class User {
         });
     }
 
+    static findByName(name) {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * FROM user WHERE name = ?",
+                [name], (err, result) => {
+                    if(err) return reject(err);
+                    resolve(result[0] || null);
+                });
+        });
+    }
+
     static getAllUsers() { 
         return new Promise((resolve, reject) => { 
             db.query("SELECT * FROM user", 

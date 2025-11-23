@@ -1,6 +1,7 @@
 const express = require("express");
-const user = require("../model/User");
+const User = require("../model/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const router = express.Router();
@@ -16,12 +17,12 @@ router.post("/signup", async(req, res) => {
     const hash_password = await bcrypt.hash(password_hash, 10);
 
     try {
-        const userExists = await user.findByEmail(email);
+        const userExists = await User.findByEmail(email);
         if(userExists) {
             return res.status(500).json({message: "User already existed."});
         }
         
-        const userID = await user.create({
+        const userID = await User.create({
             name,
             email,
             password_hash: hash_password
@@ -39,5 +40,33 @@ router.post("/signup", async(req, res) => {
         });
     }
 });
+
+// Log in
+router.post("/login", async(req, res) => {
+    const {
+        name,
+        password_hash
+    } = req.body;
+
+
+    try {
+        const user = await User.findByName(name);
+        if(!user) {
+            return res.status(400).json({ message: "Username or Password is incorrect"});
+        }
+
+        const isMatch = await bcrypt.compare(password_hash, user.password_hash);
+        if(!isMatch) {
+            return res.status(400).json({ message: "Username or Password is incorrect"});
+        }
+
+        const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET, { expiresIn: '1h'});
+        res.json({message: "Login successful", token});
+    }
+    catch (err) {
+        res.status(500).json({ error: err.message});
+    }
+});
+
 
 module.exports = router;
