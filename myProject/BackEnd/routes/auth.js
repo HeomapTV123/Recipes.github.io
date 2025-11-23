@@ -1,5 +1,6 @@
 const express = require("express");
 const user = require("../model/User");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -11,6 +12,8 @@ router.post("/signup", async(req, res) => {
         password_hash
     } = req.body;
 
+    const hash_password = await bcrypt.hash(password_hash, 10);
+
     try {
         const userExists = await user.findByEmail(email);
         if(userExists) {
@@ -20,7 +23,7 @@ router.post("/signup", async(req, res) => {
         const userID = await user.create({
             name,
             email,
-            password_hash
+            password_hash: hash_password
         });
 
         if(userID) {
