@@ -43,3 +43,75 @@ document.querySelectorAll(".slider-btn").forEach(btn => {
         });
     });
 });
+
+// Sign Up Button
+const signUpForm = document.getElementById("signUpForm");
+
+signUpForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    
+    const usernameInput = document.getElementById("usernameInput");
+    const emailInput = document.getElementById("emailInput");
+    const passwordInput = document.getElementById("passwordInput");
+
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    
+    let isEmpty = false;
+    
+    const usernameEl = document.getElementById("usernameError");
+    const passwordEl = document.getElementById("passwordError");
+    const emailEl = document.getElementById("emailError");
+
+    usernameEl.innerHTML = "";
+    emailEl.innerHTML = "";
+    passwordEl.innerHTML = "";
+
+        if(username == "" || email == "" || password == "") {
+            usernameEl.innerHTML = `
+            <p style="color:red; margin-left: 5px">Username field cannot be empty</p>
+            `;
+            setTimeout(() => {
+                usernameEl.innerHTML = "";
+            }, 3000);
+            emailEl.innerHTML = `
+            <p style="color:red; margin-left: 5px">Email field cannot be empty</p>
+            `;
+            setTimeout(() => {
+                emailEl.innerHTML = "";
+            }, 3000);
+            passwordEl.innerHTML = `
+            <p style="color:red; margin-left: 5px">Password field cannot be empty</p>
+            `;
+            setTimeout(() => {
+                passwordEl.innerHTML = "";
+            }, 3000);
+            isEmpty = true;
+        }
+
+    if(isEmpty) return;
+
+
+    const response = await fetch("http://localhost:5000/auth/signup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: username,
+            email: email,
+            password_hash: password
+        })
+    });
+
+    const result = await response.json();
+
+    if(result) {
+        window.location.href = "./mainAfterLogin.html";
+    }
+    console.log(result);
+    
+});
+
