@@ -93,11 +93,17 @@ loginForm.addEventListener("submit", async function(e) {
     });
 
     const result = await response.json();
-    if(result) {
+    if(result.message === "Login successful") {
         window.location.href = "./mainAfterLogin.html";
     }
-
-    console.log(result);
+    else {
+        passwordLoginError.innerHTML = `
+            <p style="color:red; margin-left: 5px">${result.message}</p>
+            `;
+        setTimeout(() => {
+            passwordLoginError.innerHTML = "";
+        }, 3000);
+    }
 });
 }
 
@@ -121,19 +127,23 @@ signUpForm.addEventListener("submit", async function(e) {
     const emailEl = document.getElementById("emailError");
 
 
-        if(username == "" || email == "" || password == "") {
+        if(username == "" ) {
             usernameEl.innerHTML = `
             <p style="color:red; margin-left: 5px">Username field cannot be empty</p>
             `;
             setTimeout(() => {
                 usernameEl.innerHTML = "";
             }, 3000);
+        }
+        if(email == "") {
             emailEl.innerHTML = `
             <p style="color:red; margin-left: 5px">Email field cannot be empty</p>
             `;
             setTimeout(() => {
                 emailEl.innerHTML = "";
             }, 3000);
+        }
+        if(password == "") {
             passwordEl.innerHTML = `
             <p style="color:red; margin-left: 5px">Password field cannot be empty</p>
             `;
@@ -160,10 +170,17 @@ signUpForm.addEventListener("submit", async function(e) {
 
     const result = await response.json();
 
-    if(result) {
+    if(result.message === "User created successfully") {
         window.location.href = "./mainAfterLogin.html";
     }
-    console.log(result);
+    else {
+        passwordEl.innerHTML = `
+        <p style="color:red; margin-left: 5px">${result.message}</p>
+        `;
+        setTimeout(() => {
+                passwordEl.innerHTML = "";
+            }, 3000);
+    }
     
 });
 }
