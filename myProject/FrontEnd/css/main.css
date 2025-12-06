@@ -15,7 +15,6 @@ body {
 /* --- Top nav (logo + search + login) --- */
 .nav-search {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #fff3e6;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -487,10 +486,86 @@ body {
 }
 
 /* mainAfterLogin */
+/* Container for the user icon */
 .user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 50px;
     height: 50px;
-    background-color: #D3D9D9;
-    border: 2px solid #D3D9D9;
+    /* Make it circular */
     border-radius: 50%;
+    overflow: hidden;
+    /* Optional background */
+    background-color: #f0f0f0;
+    /* Cursor to show it's clickable */
+    cursor: pointer;
+    /* Smooth hover animation */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* User icon hover effect */
+.user:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon link wrapper */
+.user .icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* The avatar image */
+.user .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+  .fa-star {
+    color: gold;
+    font-size: 18px;
+}
+
+.fa-star:hover {
+    color: darkgoldenrod;
+}
+
+.user-container {
+    display: flex;
+    flex-direction: row;
+    background-color: red;
+    width: auto;
+    justify-content: center;
+}
+
+/* Center container expands */
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* Right-side container */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* space between star, user, logout */
+}
+
+/* Logout button */
+.logout-btn {
+    padding: 10px 20px;
+    border-radius: 15px;
+    background: #fff;
+    color: #e32a2a;
+    border: 2px solid #e32a2a;
+    cursor: pointer;
+    font-weight: bold;
+}
+.logout-btn:hover {
+    background: #e32a2a;
+    color: white;
 }
