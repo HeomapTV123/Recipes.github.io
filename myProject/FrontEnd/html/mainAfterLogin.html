@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="https://kit.fontawesome.com/36e94b4c48.js" crossorigin="anonymous"></script>
 </head>
 
@@ -13,17 +15,30 @@
     <!-- Top search nav -->
     <nav class="nav-search">
         <img class="logo" src="/myProject/logo/cooking_logo.webp" alt="Cooking Logo">
-        <div class="nav-search-items">
-            <form>
-                <div class="search">
-                    <i class="search-icon fa-solid fa-magnifying-glass"></i>
-                    <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
-                </div>
-            </form>
-        </div>
+        <!-- CENTER SEARCH BAR -->
+    <div class="nav-center">
+        <form>
+            <div class="search">
+                <i class="search-icon fa-solid fa-magnifying-glass"></i>
+                <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
+            </div>
+        </form>
+    </div>
+
+        <!-- RIGHT ICON GROUP -->
+    <div class="nav-right">
+        <a href="#" class="fav-btn"><i class="fas fa-star"></i></a>
+
         <div class="user">
-            <a href=""></a>
+            <a href="#" class="icon">
+                <img src="/myProject/login/user.png" alt="avatar" class="image">
+            </a>
         </div>
+
+        <div class="logout-container">
+            <button class="logout-btn">Logout</button>
+        </div>
+    </div>
     </nav>
 
 
@@ -82,60 +97,7 @@
         </ul>
     </nav>
 
-    <!-- =======================
- SIX CATEGORY SLIDERS
-======================= -->
-    <div id="sliders-container">
 
-        <!-- BREAKFAST -->
-        <section class="recipe-slider-section">
-            <h2 class="slider-title">Breakfast Recipes</h2>
-            <div class="recipe-slider" id="slider-breakfast"></div>
-            <button class="slider-btn left" data-target="slider-breakfast">‹</button>
-            <button class="slider-btn right" data-target="slider-breakfast">›</button>
-        </section>
-
-        <!-- LUNCH -->
-        <section class="recipe-slider-section">
-            <h2 class="slider-title">Lunch Recipes</h2>
-            <div class="recipe-slider" id="slider-lunch"></div>
-            <button class="slider-btn left" data-target="slider-lunch">‹</button>
-            <button class="slider-btn right" data-target="slider-lunch">›</button>
-        </section>
-
-        <!-- DINNER -->
-        <section class="recipe-slider-section">
-            <h2 class="slider-title">Dinner Recipes</h2>
-            <div class="recipe-slider" id="slider-dinner"></div>
-            <button class="slider-btn left" data-target="slider-dinner">‹</button>
-            <button class="slider-btn right" data-target="slider-dinner">›</button>
-        </section>
-
-        <!-- CHICKEN -->
-        <section class="recipe-slider-section">
-            <h2 class="slider-title">Chicken Recipes</h2>
-            <div class="recipe-slider" id="slider-chicken"></div>
-            <button class="slider-btn left" data-target="slider-chicken">‹</button>
-            <button class="slider-btn right" data-target="slider-chicken">›</button>
-        </section>
-
-        <!-- VEGAN -->
-        <section class="recipe-slider-section">
-            <h2 class="slider-title">Vegan Recipes</h2>
-            <div class="recipe-slider" id="slider-vegan"></div>
-            <button class="slider-btn left" data-target="slider-vegan">‹</button>
-            <button class="slider-btn right" data-target="slider-vegan">›</button>
-        </section>
-
-        <!-- CHRISTMAS -->
-        <section class="recipe-slider-section">
-            <h2 class="slider-title">Christmas Recipes</h2>
-            <div class="recipe-slider" id="slider-christmas"></div>
-            <button class="slider-btn left" data-target="slider-christmas">‹</button>
-            <button class="slider-btn right" data-target="slider-christmas">›</button>
-        </section>
-
-    </div>
 
     <script src="../js/script.js"></script>
 
