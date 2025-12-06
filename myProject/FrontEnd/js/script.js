@@ -30,8 +30,9 @@ function loadCategory(categoryName, sliderId) {
 }
 
 // Load all sliders at once
-loadCategory("Breakfast", "slider-breakfast");
-loadCategory("Lunch", "slider-lunch");
+loadCategory("Asian", "slider-breakfast");
+loadCategory("Quick & Easy", "slider-breakfast");
+loadCategory("Quick & Easy", "slider-lunch");
 loadCategory("Dinner", "slider-dinner");
 loadCategory("Chicken", "slider-chicken");
 loadCategory("Vegan", "slider-vegan");
@@ -186,3 +187,97 @@ signUpForm.addEventListener("submit", async function(e) {
 }
 
 
+// Get all recipes function (mainAfterLogin)
+async function getAllRecipes() {
+    try {
+        const response = await fetch('http://localhost:5000/recipes');
+
+        if(!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json() 
+    } catch (error) {
+        console.error("Error fetching recipes: ", err);
+        return [];
+    }
+} 
+
+// Get recipes by category
+async function getRecipesByCategory(category) {
+    try {
+        const response = await fetch(`http://localhost:5000/recipes/category/${category}`);
+
+        if(!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching recipes by category: ", category + err);
+        return [];
+    }
+}
+
+// Display all recipes
+async function displayRecipes() {
+    const container = document.querySelector('.recipe-container');
+    const recipes = await getAllRecipes();
+
+    // Clear container first
+    container.innerHTML = "";
+
+    if (!recipes || recipes.length === 0) {
+                container.innerHTML = `<p>No recipes found</p>`;
+                return;
+            }
+
+    recipes.forEach(recipe => {
+        const block = document.createElement("a");
+        block.classList.add("recipe-card");
+        block.href = `#`;
+
+        block.innerHTML = `
+            <img src="${recipe.image_url}" alt="${recipe.title}">
+            <h3>${recipe.title}</h3>
+            <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+        `;
+
+        container.appendChild(block);
+    });
+}
+
+// Display recipes by category
+async function displayRecipesByCategory(category) {
+    const container = document.getElementById("breakfastRecipes");
+    const recipes = await getRecipesByCategory(category);
+
+    // Clear old recipes
+    container.innerHTML = "";
+
+    if (!recipes || recipes.length === 0) {
+        container.innerHTML = `<p>No recipes found in ${categoryName}</p>`;
+        return;
+    }
+
+    recipes.forEach(recipe => {
+        const block = document.createElement("a");
+        block.classList.add("recipe-card");
+        block.href="#";
+
+        block.innerHTML = `
+            <img src="${recipe.image_url}" alt="${recipe.title}">
+            <h3>${recipe.title}</h3>
+            <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+        `;
+
+        container.appendChild(block);
+    });
+
+}
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    displayRecipes();
+    displayRecipesByCategory("Breakfast");
+});
