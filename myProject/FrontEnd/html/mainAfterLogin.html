@@ -14,15 +14,16 @@
 <body>
     <!-- Top search nav -->
     <nav class="nav-search">
-        <img class="logo" src="/myProject/logo/cooking_logo.webp" alt="Cooking Logo">
-        <!-- CENTER SEARCH BAR -->
-    <div class="nav-center">
-        <form>
-            <div class="search">
-                <i class="search-icon fa-solid fa-magnifying-glass"></i>
-                <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
-            </div>
-        </form>
+        <a href="mainAfterLogin.html"><img class="logo" src="/myProject/logo/cooking_logo.webp" alt="Cooking Logo"></a>
+    <div class="nav-search-items">
+        <h1>Recipe<emp>Tine</emp></h1>
+            <form>
+                <div class="search">
+                    <i class="search-icon fa-solid fa-magnifying-glass"></i>
+                    <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
+                </div>
+            </form>
+                <p>The website where you can find <emp>1000+</emp> recipes shared by people around the world.</p>
     </div>
 
         <!-- RIGHT ICON GROUP -->
@@ -97,6 +98,57 @@
         </ul>
     </nav>
 
+    <div id="sliders-container">
+        <!-- BREAKFAST -->
+        <section class="recipe-slider-section">
+            <h2 class="slider-title">Breakfast Recipes</h2>
+            <div class="recipe-slider" id="slider-breakfast"></div>
+            <button class="slider-btn left" data-target="slider-breakfast">‹</button>
+            <button class="slider-btn right" data-target="slider-breakfast">›</button>
+        </section>
+
+        <!-- LUNCH -->
+        <section class="recipe-slider-section">
+            <h2 class="slider-title">Lunch Recipes</h2>
+            <div class="recipe-slider" id="slider-lunch"></div>
+            <button class="slider-btn left" data-target="slider-lunch">‹</button>
+            <button class="slider-btn right" data-target="slider-lunch">›</button>
+        </section>
+
+        <!-- DINNER -->
+        <section class="recipe-slider-section">
+            <h2 class="slider-title">Dinner Recipes</h2>
+            <div class="recipe-slider" id="slider-dinner"></div>
+            <button class="slider-btn left" data-target="slider-dinner">‹</button>
+            <button class="slider-btn right" data-target="slider-dinner">›</button>
+        </section>
+
+        <!-- CHICKEN -->
+        <section class="recipe-slider-section">
+            <h2 class="slider-title">Chicken Recipes</h2>
+            <div class="recipe-slider" id="slider-chicken"></div>
+            <button class="slider-btn left" data-target="slider-chicken">‹</button>
+            <button class="slider-btn right" data-target="slider-chicken">›</button>
+        </section>
+
+        <!-- VEGAN -->
+        <section class="recipe-slider-section">
+            <h2 class="slider-title">Vegan Recipes</h2>
+            <div class="recipe-slider" id="slider-vegan"></div>
+            <button class="slider-btn left" data-target="slider-vegan">‹</button>
+            <button class="slider-btn right" data-target="slider-vegan">›</button>
+        </section>
+
+        <!-- CHRISTMAS -->
+        <section class="recipe-slider-section">
+            <h2 class="slider-title">Christmas Recipes</h2>
+            <div class="recipe-slider" id="slider-christmas"></div>
+            <button class="slider-btn left" data-target="slider-christmas">‹</button>
+            <button class="slider-btn right" data-target="slider-christmas">›</button>
+        </section>
+
+    </div>
+
     <section class="recipes">
         <h1> Featured Recipes</h1>
     <div class="recipe-container">
@@ -109,6 +161,39 @@
     </div>
     </section>
 
+    <section class="news-grid">
+        <a href="#" class="article-card featured">
+            <div class="article-image">
+                <img src="" alt="Chocolate Cake">
+            </div>
+            <div class="card-content">
+                <span>What's for Lunch?</span>
+                <h2>Lunches that will make your afternoon</h2>
+            </div>
+        </a>
+
+        <a href="#" class="article-card">
+            <div class="article-image">
+                <img src="" alt="Chocolate Cake">
+            </div>
+            <div class="card-content">
+                <span class="category">Our Top Picks</span>
+                <h2 class="headline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores odio enim corrupti? Nostrum assumenda, magni ducimus ipsa atque cumque modi.</h2>
+            </div>
+        </a>
+
+        <a href="#" class="article-card">
+            <div class="article-image">
+                <img src="" alt="Chocolate Cake">
+            </div>
+            <div class="card-content">
+                <span>Tested & Reviewed</span>
+                <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores odio enim corrupti? Nostrum assumenda, magni ducimus ipsa atque cumque modi.</h2>
+            </div>
+        </a>
+    </section>
+
+    
     <section class="recipes">
         <h1> Breakfast</h1>
     <div class="recipe-container" id="breakfastRecipes">
@@ -119,6 +204,10 @@
         </a> -->
         
     </div>
+    </section>
+
+    <section class="chefs">
+
     </section>
 
     <script src="../js/script.js"></script>
