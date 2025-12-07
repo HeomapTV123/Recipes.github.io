@@ -64,13 +64,13 @@ router.post("/login", async(req, res) => {
         // This automatically creates a cookie with a session ID and sends it to the browser
         // The data below is stored on the SERVER, not in the cookie
         req.session.user = {
-            id: user._id,
+            id: user.id,
             name: user.name,
             email: user.email
         };
 
         // Save the session to ensure it's written before responding
-        res.session.save(err => {
+        req.session.save(err => {
             if(err) return res.status(500).json({error: "Session error"});
             res.status(200).json({message: "Login successful"});
         })

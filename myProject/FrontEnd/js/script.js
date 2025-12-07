@@ -4,6 +4,9 @@ const loginForm = document.getElementById("loginForm");
 // Sign Up Form
 const signUpForm = document.getElementById("signUpForm");
 
+// Log Out Button
+const logoutBtn = document.querySelector(".logout-btn");
+
 // Load recipes into a specific slider
 function loadCategory(categoryName, sliderId) {
     fetch(`http://localhost:5000/recipes/category/${categoryName}`)
@@ -184,6 +187,36 @@ signUpForm.addEventListener("submit", async function(e) {
     }
     
 });
+}
+
+// Log out function
+if(logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+
+        try {
+            const response = await fetch('http://localhost:5000/auth/logout', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+        });
+
+            if(!response.ok) {
+                console.error('Logout failed');
+                throw new Error(`Error: ${response.status}`);
+            }
+            else {
+                // Redirect user to main page
+                window.location.href = "./main.html";
+            }
+
+            return response.json();
+        } catch (error) {
+            console.error("Error: ", err);
+            
+        }
+
+    });
 }
 
 

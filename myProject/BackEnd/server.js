@@ -193,10 +193,6 @@ app.get('/recipes/category/:name', (req, res) => {
     });
 });
 
-    // All the functions in auth.js 
-    app.use("/auth", router);
-
-
     app.use(session({
         secret: process.env.SESSION_SECRET, // used to sign the session ID cookie
         resave: false,
@@ -207,6 +203,10 @@ app.get('/recipes/category/:name', (req, res) => {
             maxAge: 1000 * 60 * 60 // 1 hour
         }
     }));
+
+    // All the functions in auth.js 
+    app.use("/auth", router);
+
 })();
 
 // ================================
