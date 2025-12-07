@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const router = require("./routes/auth");
+const session = require("express-session");
 
 const app = express();
 app.use(cors());
@@ -194,6 +195,18 @@ app.get('/recipes/category/:name', (req, res) => {
 
     // All the functions in auth.js 
     app.use("/auth", router);
+
+
+    app.use(session({
+        secret: process.env.SESSION_SECRET, // used to sign the session ID cookie
+        resave: false,
+        saveUninitialized: false, // Don't create a session until something is stored
+        cookie: {
+            secure: false, // set to true if using HTTPS
+            httpOnly: true, // Prevent JavaScript(XSS) from reading the cookie
+            maxAge: 1000 * 60 * 60 // 1 hour
+        }
+    }));
 })();
 
 // ================================

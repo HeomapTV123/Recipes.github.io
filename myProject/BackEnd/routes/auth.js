@@ -1,7 +1,6 @@
 const express = require("express");
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const router = express.Router();
@@ -55,18 +54,48 @@ router.post("/login", async(req, res) => {
             return res.status(400).json({ message: "Username or Password is incorrect"});
         }
 
+        // Compare password to the hashed password
         const isMatch = await bcrypt.compare(password_hash, user.password_hash);
         if(!isMatch) {
             return res.status(400).json({ message: "Username or Password is incorrect"});
         }
 
-        const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET, { expiresIn: '1h'});
-        res.json({message: "Login successful", token});
+        // CREATE SESSION
+        // This automatically creates a cookie with a session ID and sends it to the browser
+        // The data below is stored on the SERVER, not in the cookie
+        req.session.user = {
+            id: user._id,
+            name: user.name,
+            email: user.email
+        };
+
+        // Save the session to ensure it's written before responding
+        res.session.save(err => {
+            if(err) return res.status(500).json({error: "Session error"});
+            res.status(200).json({message: "Login successful"});
+        })
+
     }
     catch (err) {
         res.status(500).json({ error: err.message});
     }
 });
+
+// Logout
+router.post("/logout", (req, res) => {
+    // Destroy the session on the server
+    req.session.destroy((err) => {
+        if(err) {
+            return res.status(500).send("Log out unsuccessful.");
+        }
+
+        // Clear the cookie on the client
+        res.clearCookie("connect.sid"); // default name
+        res.json({message: "Logout successfully"});
+    });
+});
+
+
 
 
 module.exports = router;
