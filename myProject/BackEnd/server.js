@@ -193,7 +193,7 @@ app.get('/recipes/category/:name', (req, res) => {
     });
 });
 
-    app.use(session({
+app.use(session({
         secret: process.env.SESSION_SECRET, // used to sign the session ID cookie
         resave: false,
         saveUninitialized: false, // Don't create a session until something is stored
@@ -204,8 +204,8 @@ app.get('/recipes/category/:name', (req, res) => {
         }
     }));
 
-    // All the functions in auth.js 
-    app.use("/auth", router);
+// All the functions in auth.js 
+app.use("/auth", router);
 
 })();
 

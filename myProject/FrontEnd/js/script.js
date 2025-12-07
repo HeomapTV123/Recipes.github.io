@@ -8,7 +8,6 @@ const signUpForm = document.getElementById("signUpForm");
 const logoutBtn = document.querySelector(".logout-btn");
 
 
-
 // Load recipes into a specific slider
 function loadCategory(categoryName, sliderId) {
     fetch(`http://localhost:5000/recipes/category/${categoryName}`)
@@ -215,6 +214,22 @@ signUpForm.addEventListener("submit", async function(e) {
 });
 }
 
+// Show/Hide Password
+function togglePassword() {
+    const toggleBtn = document.getElementById("toggleBtn");
+    const passwordContainer = document.getElementById("passwordContainer");
+    const passwordField = document.querySelector('.password');
+    toggleBtn.addEventListener("click", function() {
+        // Toggle type attribute
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+    
+        // Toggle the eye icon and container class for styling
+        passwordContainer.classList.toggle('active');
+    });
+    }
+
+
 // Log out function
 if(logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
@@ -357,4 +372,5 @@ async function displayRecipesByCategory(category) {
 window.addEventListener("DOMContentLoaded", () => {
     displayRecipes();
     displayRecipesByCategory("Breakfast");
+    togglePassword();
 });
