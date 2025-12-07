@@ -7,6 +7,8 @@ const signUpForm = document.getElementById("signUpForm");
 // Log Out Button
 const logoutBtn = document.querySelector(".logout-btn");
 
+
+
 // Load recipes into a specific slider
 function loadCategory(categoryName, sliderId) {
     fetch(`http://localhost:5000/recipes/category/${categoryName}`)
@@ -53,6 +55,30 @@ document.querySelectorAll(".slider-btn").forEach(btn => {
         });
     });
 });
+
+// Add recipes to favorites
+document.addEventListener("click", function(e) {
+    const btn = e.target.closest('.favorite-btn');
+
+    if(btn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const icon = btn.querySelector('i');
+
+        btn.classList.toggle('active');
+
+        if(btn.classList.contains('active')) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+        }
+        else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+        }
+    }
+});
+
 
 // If login form exists, then perform login function
 if(loginForm) {
@@ -220,6 +246,8 @@ if(logoutBtn) {
 }
 
 
+
+
 // Get all recipes function (mainAfterLogin)
 async function getAllRecipes() {
     try {
@@ -266,17 +294,25 @@ async function displayRecipes() {
             }
 
     recipes.forEach(recipe => {
-        const block = document.createElement("a");
-        block.classList.add("recipe-card");
-        block.href = `#`;
+        const card = document.createElement("div");
+        card.classList.add("recipe-card");
 
-        block.innerHTML = `
-            <img src="${recipe.image_url}" alt="${recipe.title}">
-            <h3>${recipe.title}</h3>
-            <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+        // 2. Set the inner HTML
+        // Notice we use 'far fa-heart' (Regular/Outline) by default
+        card.innerHTML = `
+            <div style="position: relative;">
+                <a href="#" class="recipe-link">
+                    <img src="${recipe.image_url}" alt="${recipe.title}">
+                    <h3>${recipe.title}</h3>
+                    <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+                </a>
+                <button class="favorite-btn" data-id="${recipe.id}">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
         `;
 
-        container.appendChild(block);
+        container.appendChild(card);
     });
 }
 
@@ -294,17 +330,25 @@ async function displayRecipesByCategory(category) {
     }
 
     recipes.forEach(recipe => {
-        const block = document.createElement("a");
-        block.classList.add("recipe-card");
-        block.href="#";
+        const card = document.createElement("div");
+        card.classList.add("recipe-card");
 
-        block.innerHTML = `
-            <img src="${recipe.image_url}" alt="${recipe.title}">
-            <h3>${recipe.title}</h3>
-            <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+        // 2. Set the inner HTML
+        // Notice we use 'far fa-heart' (Regular/Outline) by default
+        card.innerHTML = `
+            <div style="position: relative;">
+                <a href="#" class="recipe-link">
+                    <img src="${recipe.image_url}" alt="${recipe.title}">
+                    <h3>${recipe.title}</h3>
+                    <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+                </a>
+                <button class="favorite-btn" data-id="${recipe.id}">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
         `;
 
-        container.appendChild(block);
+        container.appendChild(card);
     });
 
 }

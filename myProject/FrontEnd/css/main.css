@@ -217,6 +217,8 @@ body {
 
 /* Recipe card */
 .recipe-card {
+    position: relative;
+    display: block;
     min-width: 260px;
     max-height: 260px;
     background: white;
@@ -257,6 +259,33 @@ body {
     margin: 0;
     font-size: 14px;
     color: #666;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white; /* White circle background */
+    border: none;
+    border-radius: 50%; /* Make it round */
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Small shadow for depth */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    z-index: 10; /* Ensure it sits on top of the image */
+}
+
+.favorite-btn i {
+    color: red;
+    font-size: 16px;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
 }
 
 /* Slider buttons */
@@ -554,13 +583,14 @@ body {
     object-fit: cover;
 }
 
-  .fa-star {
-    color: gold;
+.fa-star {
+    color: transparent;
+    -webkit-text-stroke: 1px black; 
     font-size: 18px;
 }
 
 .fa-star:hover {
-    color: darkgoldenrod;
+    color: gold;
 }
 
 .user-container {
