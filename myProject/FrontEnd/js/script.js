@@ -25,7 +25,9 @@ function loadCategory(categoryName, sliderId) {
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <div class="recipe-info">
                         <h3>${recipe.title}</h3>
-                        <p>${recipe.prep_time + recipe.cook_time} mins</p>
+                            <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
+                            (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
+                            : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p>                     
                     </div>
                 </a>
             `).join("");
@@ -319,7 +321,9 @@ async function displayRecipes() {
                 <a href="#" class="recipe-link">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
-                    <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+                    <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
+                        (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
+                        : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
                 </a>
                 <button class="favorite-btn" data-id="${recipe.id}">
                     <i class="far fa-heart"></i>
@@ -355,7 +359,9 @@ async function displayRecipesByCategory(category) {
                 <a href="#" class="recipe-link">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
-                    <p>${recipe.prep_time + recipe.cook_time} minutes</p>
+                    <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
+                        (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
+                        : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
                 </a>
                 <button class="favorite-btn" data-id="${recipe.id}">
                     <i class="far fa-heart"></i>
