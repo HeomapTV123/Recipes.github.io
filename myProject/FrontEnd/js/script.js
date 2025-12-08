@@ -56,29 +56,6 @@ document.querySelectorAll(".slider-btn").forEach(btn => {
     });
 });
 
-// Add recipes to favorites
-document.addEventListener("click", function(e) {
-    const btn = e.target.closest('.favorite-btn');
-
-    if(btn) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const icon = btn.querySelector('i');
-
-        btn.classList.toggle('active');
-
-        if(btn.classList.contains('active')) {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-        }
-        else {
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-        }
-    }
-});
-
 
 // If login form exists, then perform login function
 if(loginForm) {
@@ -261,8 +238,67 @@ if(logoutBtn) {
     });
 }
 
+// Add to favorites()
+async function addToFavorites(recipeId) {
+    try {
+        const response = await fetch ('http://localhost:5000/saves', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                recipeId: recipeId
+            })
+        });
 
+        const result = await response.json();
 
+        if(!response.ok) {
+            if(response.status === 401) {
+                alert(result.message);
+                window.location.href = "html/login.html";
+                return false;
+            }
+            
+            throw new Error(result.message || result.error || "Unknown error occurred");
+        }
+        alert(result.message);
+        return true;
+
+    } catch (error) {
+        console.error("Save field: ", error);
+        alert("Failed to save recipe: " + error.message);
+        return false;
+    }
+}
+
+// HANDLE FAVORITE BUTTON CLICKS
+document.addEventListener("click", async function(e) {
+    const btn = e.target.closest('.favorite-btn');
+
+    if(btn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const recipeId = btn.dataset.id;
+        const icon = btn.querySelector('i');
+        
+        const isSuccess = await addToFavorites(recipeId);
+
+        if(isSuccess) {
+            btn.classList.toggle('active');
+
+            if(btn.classList.contains('active')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+            }
+            else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            }
+        }
+    }
+});
 
 // Get all recipes function (mainAfterLogin)
 async function getAllRecipes() {
@@ -324,7 +360,7 @@ async function displayRecipes() {
                         (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
                         : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
                 </a>
-                <button class="favorite-btn" data-id="${recipe.id}">
+                <button class="favorite-btn" data-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
                 </button>
             </div>

@@ -14,6 +14,20 @@ app.get("/", (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, "..", "FrontEnd")));
+app.use(session({
+        secret: process.env.SESSION_SECRET, // used to sign the session ID cookie
+        resave: false,
+        saveUninitialized: false, // Don't create a session until something is stored
+        cookie: {
+            secure: false, // set to true if using HTTPS
+            httpOnly: true, // Prevent JavaScript(XSS) from reading the cookie
+            maxAge: 1000 * 60 * 60 // 1 hour
+        }
+    }));
+
+// All the functions in auth.js 
+app.use("/", router);
+
 
 let db; // global DB connection
 
@@ -200,19 +214,6 @@ app.get('/recipes/category/:name', (req, res) => {
     });
 });
 
-app.use(session({
-        secret: process.env.SESSION_SECRET, // used to sign the session ID cookie
-        resave: false,
-        saveUninitialized: false, // Don't create a session until something is stored
-        cookie: {
-            secure: false, // set to true if using HTTPS
-            httpOnly: true, // Prevent JavaScript(XSS) from reading the cookie
-            maxAge: 1000 * 60 * 60 // 1 hour
-        }
-    }));
-
-// All the functions in auth.js 
-app.use("/", router);
 
 })();
 
