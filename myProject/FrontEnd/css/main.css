@@ -200,6 +200,7 @@ body {
     font-weight: 700;
     margin-bottom: 15px;
     color: #d43f3a;
+    text-align: center;
 }
 
 /* Slider wrapper */
@@ -237,6 +238,10 @@ body {
     color: orangered;
 }
 
+.recipe-card:hover .favorite-btn {
+    display: flex;
+}
+
 /* Image */
 .recipe-card img {
     width: 100%;
@@ -272,7 +277,7 @@ body {
     height: 35px;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Small shadow for depth */
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
@@ -700,6 +705,7 @@ body {
     gap: 30px;
     width: 90%;
     margin: 0 auto;
+    margin-top: 15px;
 }
 
 .article-card {

@@ -8,41 +8,40 @@ const signUpForm = document.getElementById("signUpForm");
 const logoutBtn = document.querySelector(".logout-btn");
 
 
-// Load recipes into a specific slider
-function loadCategory(categoryName, sliderId) {
-    fetch(`http://localhost:5000/recipes/category/${categoryName}`)
-        .then(res => res.json())
-        .then(recipes => {
-            const slider = document.getElementById(sliderId);
+// // Load recipes into a specific slider
+// function loadCategory(categoryName, sliderId) {
+//     fetch(`http://localhost:5000/recipes/category/${categoryName}`)
+//         .then(res => res.json())
+//         .then(recipes => {
+//             const slider = document.getElementById(sliderId);
 
-            if (!recipes || recipes.length === 0) {
-                slider.innerHTML = `<p>No recipes found for ${categoryName}</p>`;
-                return;
-            }
+//             if (!recipes || recipes.length === 0) {
+//                 slider.innerHTML = `<p>No recipes found for ${categoryName}</p>`;
+//                 return;
+//             }
 
-            slider.innerHTML = recipes.map(recipe => `
-                <a href="#" class="recipe-card">
-                    <img src="${recipe.image_url}" alt="${recipe.title}">
-                    <div class="recipe-info">
-                        <h3>${recipe.title}</h3>
-                            <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
-                            (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
-                            : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p>                     
-                    </div>
-                </a>
-            `).join("");
-        })
-        .catch(err => console.error(`Error loading ${categoryName}:`, err));
-}
+//             slider.innerHTML = recipes.map(recipe => `
+//                 <a href="#" class="recipe-card">
+//                     <img src="${recipe.image_url}" alt="${recipe.title}">
+//                     <div class="recipe-info">
+//                         <h3>${recipe.title}</h3>
+//                             <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
+//                             (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
+//                             : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p>                     
+//                     </div>
+//                 </a>
+//             `).join("");
+//         })
+//         .catch(err => console.error(`Error loading ${categoryName}:`, err));
+// }
 
-// Load all sliders at once
-loadCategory("Asian", "slider-breakfast");
-loadCategory("Quick & Easy", "slider-breakfast");
-loadCategory("Quick & Easy", "slider-lunch");
-loadCategory("Dinner", "slider-dinner");
-loadCategory("Chicken", "slider-chicken");
-loadCategory("Vegan", "slider-vegan");
-loadCategory("Christmas", "slider-christmas");
+// // Load all sliders at once
+// loadCategory("Asian", "slider-breakfast");
+// loadCategory("Quick & Easy", "slider-lunch");
+// loadCategory("Dinner", "slider-dinner");
+// loadCategory("Chicken", "slider-chicken");
+// loadCategory("Vegan", "slider-vegan");
+// loadCategory("Christmas", "slider-christmas");
 
 // Slider scroll buttons
 document.querySelectorAll(".slider-btn").forEach(btn => {
@@ -336,8 +335,8 @@ async function displayRecipes() {
 }
 
 // Display recipes by category
-async function displayRecipesByCategory(category) {
-    const container = document.getElementById("breakfastRecipes");
+async function displayRecipesByCategory(category, sliderId) {
+    const container = document.getElementById(sliderId);
     const recipes = await getRecipesByCategory(category);
 
     // Clear old recipes
@@ -352,8 +351,7 @@ async function displayRecipesByCategory(category) {
         const card = document.createElement("div");
         card.classList.add("recipe-card");
 
-        // 2. Set the inner HTML
-        // Notice we use 'far fa-heart' (Regular/Outline) by default
+        // Set the inner HTML
         card.innerHTML = `
             <div style="position: relative;">
                 <a href="#" class="recipe-link">
@@ -377,6 +375,12 @@ async function displayRecipesByCategory(category) {
 
 window.addEventListener("DOMContentLoaded", () => {
     displayRecipes();
-    displayRecipesByCategory("Breakfast");
+    displayRecipesByCategory("Breakfast", "slider-breakfast");
+    displayRecipesByCategory("Lunch", "slider-lunch");
+    displayRecipesByCategory("Dinner", "slider-dinner");
+    displayRecipesByCategory("Chicken", "slider-chicken");
+    displayRecipesByCategory("Breakfast", "slider-vegan");
+    displayRecipesByCategory("Breakfast", "slider-christmas");
+
     togglePassword();
 });

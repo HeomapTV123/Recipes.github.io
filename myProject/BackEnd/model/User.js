@@ -36,16 +36,34 @@ class User {
             }); 
         }
 
-        static create({ name, email, password_hash, role = "user"}) { 
-            return new Promise((resolve, reject) => { 
-                db.query("INSERT INTO user (name, email, password_hash, role) VALUES (?, ?, ?, ?) ", 
-                    [name, email, password_hash, role], (err, results) => { 
-                        if(err) return reject(err); 
+    static create({ name, email, password_hash, role = "user"}) { 
+        return new Promise((resolve, reject) => { 
+            db.query("INSERT INTO user (name, email, password_hash, role) VALUES (?, ?, ?, ?) ", 
+                [name, email, password_hash, role], (err, results) => { 
+                    if(err) return reject(err); 
                         resolve(results.insertId); 
                     }); 
                 }); 
             }
-            
-        }
+    
+    static addToSaves(userId, recipeId) {
+        return new Promise((resolve, reject) => {
+            // This query checks existence before inserting:
+            const query = `
+                INSERT INTO favorite (user_id, recipe_id) 
+                SELECT ?, ? 
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM favorite WHERE user_id = ? AND recipe_id = ?
+                )
+            `;
+
+            db.query(query, [userId, recipeId, userId, recipeId], (err, result) => {
+                if(err) return reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    }
 module.exports = User;
 
