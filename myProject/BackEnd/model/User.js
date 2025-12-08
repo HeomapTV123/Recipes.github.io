@@ -64,6 +64,22 @@ class User {
         });
     }
 
+
+    static getAllSaves(userId) {
+        return new Promise((resolve, reject) => {
+            const query = `
+            SELECT r.* 
+            FROM Recipe r
+            JOIN favorite f ON r.recipe_id = f.recipe_id
+            WHERE f.user_id = ?
+            `;
+
+            db.query(query, [userId], (err, result) => {
+                if(err) return reject(err);
+                resolve(result);
+            })
+        })
+    }
     }
 module.exports = User;
 

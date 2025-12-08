@@ -126,6 +126,25 @@ router.post('/saves', async (req, res) => {
     }
 });
 
+router.get('/saves', async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ message: "You must be logged in to save recipes." });
+    }
+    
+    try {
+
+        const userId = req.session.user.id;
+
+        const recipes = await User.getAllSaves(userId);
+
+        res.status(200).json(recipes);
+        
+    } catch (error) {
+        console.error(error); // Good to log on server side
+        res.status(500).json({ error: error.message});
+    }
+});
+
 
 
 module.exports = router;

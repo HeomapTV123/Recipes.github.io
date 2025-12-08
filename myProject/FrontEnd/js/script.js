@@ -332,6 +332,27 @@ async function getRecipesByCategory(category) {
     }
 }
 
+// Get all favorited recipes
+async function getAllFavorites() {
+    try {
+        const response = await fetch('http://localhost:5000/saves');
+
+        if(response.status === 401) {
+            console.log("User not logged in");
+            return [];
+        }
+
+        if(!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching favorite recipes: ", err);
+        return [];
+    }
+}
+
 // Display all recipes
 async function displayRecipes() {
     const container = document.querySelector('.recipe-container');
@@ -405,7 +426,50 @@ async function displayRecipesByCategory(category, sliderId) {
 
         container.appendChild(card);
     });
+}
 
+// Display favorites in saves.html
+async function displayFavorites() {
+    const container = document.getElementById("savedRecipesContainer");
+    
+    if(!container) {
+        return;
+    }
+
+    const recipes = await getAllFavorites();
+
+    // Clear old recipes
+    container.innerHTML = "";
+
+    if (!recipes || recipes.length === 0) {
+        container.innerHTML = `<p>No recipes found favorites</p>`;
+        return;
+    }
+
+    recipes.forEach(recipe => {
+        const card = document.createElement("div");
+        card.classList.add("recipe-card");
+
+        const totalTime = recipe.prep_time + recipe.cook_time;
+        const timeDisplay = totalTime < 60 
+            ? totalTime + " minutes" 
+            : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
+        // Set the inner HTML
+        card.innerHTML = `
+            <div style="position: relative;">
+                <a href="#" class="recipe-link">
+                    <img src="${recipe.image_url}" alt="${recipe.title}">
+                    <h3>${recipe.title}</h3>
+                    <p>${timeDisplay}</p> 
+                </a>
+                <button class="favorite-btn" data-id="${recipe.recipe_id}">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
 }
 
 
@@ -417,6 +481,7 @@ window.addEventListener("DOMContentLoaded", () => {
     displayRecipesByCategory("Chicken", "slider-chicken");
     displayRecipesByCategory("Vegan", "slider-vegan");
     displayRecipesByCategory("Christmas", "slider-christmas");
+    displayFavorites();
 
     togglePassword();
 });
