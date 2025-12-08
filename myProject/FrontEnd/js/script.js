@@ -236,7 +236,7 @@ if(logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
 
         try {
-            const response = await fetch('http://localhost:5000/auth/logout', {
+            const response = await fetch('http://localhost:5000/logout', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
