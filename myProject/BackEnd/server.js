@@ -3,10 +3,17 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const router = require("./routes/auth");
 const session = require("express-session");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "FrontEnd", "html", "main.html"));
+});
+
+app.use(express.static(path.join(__dirname, "..", "FrontEnd")));
 
 let db; // global DB connection
 
@@ -205,7 +212,7 @@ app.use(session({
     }));
 
 // All the functions in auth.js 
-app.use("/auth", router);
+app.use("/", router);
 
 })();
 

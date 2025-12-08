@@ -111,7 +111,7 @@ loginForm.addEventListener("submit", async function(e) {
 
     if(isEmpty) return;
 
-    const response = await fetch("http://localhost:5000/auth/login", {
+    const response = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json" 
@@ -186,7 +186,7 @@ signUpForm.addEventListener("submit", async function(e) {
     if(isEmpty) return;
 
 
-    const response = await fetch("http://localhost:5000/auth/signup", {
+    const response = await fetch("http://localhost:5000/signup", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -379,8 +379,8 @@ window.addEventListener("DOMContentLoaded", () => {
     displayRecipesByCategory("Lunch", "slider-lunch");
     displayRecipesByCategory("Dinner", "slider-dinner");
     displayRecipesByCategory("Chicken", "slider-chicken");
-    displayRecipesByCategory("Breakfast", "slider-vegan");
-    displayRecipesByCategory("Breakfast", "slider-christmas");
+    displayRecipesByCategory("Vegan", "slider-vegan");
+    displayRecipesByCategory("Christmas", "slider-christmas");
 
     togglePassword();
 });
