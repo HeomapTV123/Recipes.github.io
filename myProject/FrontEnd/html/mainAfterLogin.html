@@ -5,27 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <script src="https://kit.fontawesome.com/36e94b4c48.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <!-- Top search nav -->
     <nav class="nav-search">
-        <img class="logo" src="../logo/cooking_logo.webp" alt="Cooking Logo">
-        <div class="nav-search-items">
+        <a href="/html/mainAfterLogin.html"><img class="logo" src="/logo/cooking_logo.webp" alt="Cooking Logo"></a>
+    <div class="nav-search-items">
+        <h1>Recipe<emp>Tine</emp></h1>
             <form>
                 <div class="search">
                     <i class="search-icon fa-solid fa-magnifying-glass"></i>
                     <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
                 </div>
             </form>
+                <p>The website where you can find <emp>1000+</emp> recipes shared by people around the world.</p>
+    </div>
+
+        <!-- RIGHT ICON GROUP -->
+    <div class="nav-right">
+        <a href="/html/saves.html" class="fav-btn"><i class="fas fa-star"></i></a>
+
+        <div class="user">
+            <a href="#" class="icon">
+                <img src="/login/user.png" alt="avatar" class="image">
+            </a>
         </div>
-        <div class="nav-search-items login">
-            <div><a href="#">Login</a></div>
-            <div><a href="#">Create new account</a></div>
+
+        <div class="logout-container">
+            <button class="logout-btn">Logout</button>
         </div>
+    </div>
     </nav>
+
 
     <!-- Category nav -->
     <nav class="nav-select">
@@ -82,11 +99,39 @@
         </ul>
     </nav>
 
-    <!-- =======================
- SIX CATEGORY SLIDERS
-======================= -->
-    <div id="sliders-container">
+    <section class="news-grid">
+        <a href="#" class="article-card featured">
+            <div class="article-image">
+                <img src="" alt="Chocolate Cake">
+            </div>
+            <div class="card-content">
+                <span class="category">What's for Lunch?</span>
+                <h2 class="headline">Lunches that will make your afternoon</h2>
+            </div>
+        </a>
 
+        <a href="#" class="article-card">
+            <div class="article-image">
+                <img src="" alt="Chocolate Cake">
+            </div>
+            <div class="card-content">
+                <span class="category">Our Top Picks</span>
+                <h2 class="headline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores odio enim corrupti? Nostrum assumenda, magni ducimus ipsa atque cumque modi.</h2>
+            </div>
+        </a>
+
+        <a href="#" class="article-card">
+            <div class="article-image">
+                <img src="" alt="Chocolate Cake">
+            </div>
+            <div class="card-content">
+                <span class="category">Tested & Reviewed</span>
+                <h2 class="headline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores odio enim corrupti? Nostrum assumenda, magni ducimus ipsa atque cumque modi.</h2>
+            </div>
+        </a>
+    </section>
+
+    <div id="sliders-container">
         <!-- BREAKFAST -->
         <section class="recipe-slider-section">
             <h2 class="slider-title">Breakfast Recipes</h2>
@@ -137,10 +182,35 @@
 
     </div>
 
-    <script src="slider.js"></script>
+    <!-- <section class="recipes">
+        <h1> Featured Recipes</h1>
+    <div class="recipe-container">
+
+    </div>
+    </section> -->
 
 
-    <script src="slider.js"></script>
+
+    
+    <section class="recipes">
+        <h1>Breakfast</h1>
+    <div class="recipe-container" id="breakfastRecipes">
+        <!-- <a href="#" class="recipe-block">
+                    <img src="/myProject/login/chicken.jpg" alt="Grilled Chicken">
+                        <h3>Chicken</h3>
+                        <p>20 minutes</p>
+        </a> -->
+    </div>
+    </section>
+
+    <section class="chefs">
+        <h1>Chefs</h1>
+    <div>
+
+    </div>
+    </section>
+
+    <script src="/js/script.js"></script>
 
 </body>
 </html>
