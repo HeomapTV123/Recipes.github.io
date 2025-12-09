@@ -7,9 +7,14 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #fffaf5;
-    background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
-    color: #333;
+    background-color: #f9eee3;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+}
+
+/* Hide horizontal scrollbars */
+.recipe-slider::-webkit-scrollbar,
+.hero-slider::-webkit-scrollbar {
+    display: none;
 }
 
 /* --- Top nav (logo + search + login) --- */
@@ -186,6 +191,59 @@ body {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================
+   HERO SLIDER
+============================ */
+.hero-slider-section {
+    margin: 40px auto;
+    padding: 0 40px;
+    position: relative;
+}
+
+#hero-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.hero-card {
+    min-width: 330px;
+    height: 220px;
+    background: #eee;
+    border-radius: 14px;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.hero-card:hover .favorite-btn {
+    display: flex;
+}
+
+.hero-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+}
+
 
 /* ==========================
    RECIPE SLIDER CONTAINER
@@ -784,4 +842,23 @@ body {
     column-gap: 10px;
     row-gap: 30px;
 
+}
+
+/* recipe.html */
+.recipe-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.recipe-hero {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.step-card {
+    background: #fff3e6;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
 }

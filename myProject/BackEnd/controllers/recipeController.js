@@ -1,4 +1,4 @@
-const Recipe = require("../models/recipeModel");
+const Recipe = require("../model/recipeModel");
 
 exports.getAllRecipes = async (req, res) => {
     const [rows] = await Recipe.getAll();

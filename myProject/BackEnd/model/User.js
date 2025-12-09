@@ -1,9 +1,4 @@
-const connectDB = require("../config/db");
-
-let db;
-(async() => {
-    db = await connectDB();
-})();
+const db = require("../config/db");
 
 class User {
     static findByEmail(email) {

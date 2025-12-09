@@ -17,15 +17,15 @@
                 <h1>Recipe<emp>Tine</emp></h1>
             <form>
                 <div class="search">
-                    <i class="search-icon fa-solid fa-magnifying-glass"></i>
-                    <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="search-input" placeholder="Find recipes, ingredients...">
                 </div>
             </form>
                 <p>The website where you can find <emp>1000+</emp> recipes shared by people around the world.</p>
         </div>
         <div class="nav-search-items login">
             <div><a href="/html/login.html">Login</a></div>
-            <div><a href="/html/signup.html">Create new account</a></div>
+            <div><a href="/html/signup.html">Register</a></div>
         </div>
     </nav>
 
@@ -85,14 +85,28 @@
         </ul>
     </nav>
 
-    <!-- =======================
- SIX CATEGORY SLIDERS
-======================= -->
+
+    <!-- =========================
+         HERO SLIDER
+    ========================== -->
+    <section class="hero-slider-section">
+        <h2 id="hero-title">Breakfast Recipes</h2>
+
+        <div class="hero-slider" id="hero-slider"></div>
+
+        <button class="slider-btn left" id="hero-left">‹</button>
+        <button class="slider-btn right" id="hero-right">›</button>
+    </section>
+
+
+    <!-- =========================
+         STATIC CATEGORY SLIDERS
+    ========================== -->
     <div id="sliders-container">
 
         <!-- BREAKFAST -->
         <section class="recipe-slider-section">
-            <h2 class="slider-title">Breakfast Recipes</h2>
+            <h3>Breakfast Recipes</h3>
             <div class="recipe-slider" id="slider-breakfast"></div>
             <button class="slider-btn left" data-target="slider-breakfast">‹</button>
             <button class="slider-btn right" data-target="slider-breakfast">›</button>
@@ -100,7 +114,7 @@
 
         <!-- LUNCH -->
         <section class="recipe-slider-section">
-            <h2 class="slider-title">Lunch Recipes</h2>
+            <h3>Lunch Recipes</h3>
             <div class="recipe-slider" id="slider-lunch"></div>
             <button class="slider-btn left" data-target="slider-lunch">‹</button>
             <button class="slider-btn right" data-target="slider-lunch">›</button>
@@ -108,7 +122,7 @@
 
         <!-- DINNER -->
         <section class="recipe-slider-section">
-            <h2 class="slider-title">Dinner Recipes</h2>
+            <h3>Dinner Recipes</h3>
             <div class="recipe-slider" id="slider-dinner"></div>
             <button class="slider-btn left" data-target="slider-dinner">‹</button>
             <button class="slider-btn right" data-target="slider-dinner">›</button>
@@ -116,7 +130,7 @@
 
         <!-- CHICKEN -->
         <section class="recipe-slider-section">
-            <h2 class="slider-title">Chicken Recipes</h2>
+            <h3>Chicken Recipes</h3>
             <div class="recipe-slider" id="slider-chicken"></div>
             <button class="slider-btn left" data-target="slider-chicken">‹</button>
             <button class="slider-btn right" data-target="slider-chicken">›</button>
@@ -124,7 +138,7 @@
 
         <!-- VEGAN -->
         <section class="recipe-slider-section">
-            <h2 class="slider-title">Vegan Recipes</h2>
+            <h3>Vegan Recipes</h3>
             <div class="recipe-slider" id="slider-vegan"></div>
             <button class="slider-btn left" data-target="slider-vegan">‹</button>
             <button class="slider-btn right" data-target="slider-vegan">›</button>
@@ -132,7 +146,7 @@
 
         <!-- CHRISTMAS -->
         <section class="recipe-slider-section">
-            <h2 class="slider-title">Christmas Recipes</h2>
+            <h3>Christmas Recipes</h3>
             <div class="recipe-slider" id="slider-christmas"></div>
             <button class="slider-btn left" data-target="slider-christmas">‹</button>
             <button class="slider-btn right" data-target="slider-christmas">›</button>

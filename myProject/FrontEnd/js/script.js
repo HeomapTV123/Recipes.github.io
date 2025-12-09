@@ -7,42 +7,6 @@ const signUpForm = document.getElementById("signUpForm");
 // Log Out Button
 const logoutBtn = document.querySelector(".logout-btn");
 
-
-// // Load recipes into a specific slider
-// function loadCategory(categoryName, sliderId) {
-//     fetch(`http://localhost:5000/recipes/category/${categoryName}`)
-//         .then(res => res.json())
-//         .then(recipes => {
-//             const slider = document.getElementById(sliderId);
-
-//             if (!recipes || recipes.length === 0) {
-//                 slider.innerHTML = `<p>No recipes found for ${categoryName}</p>`;
-//                 return;
-//             }
-
-//             slider.innerHTML = recipes.map(recipe => `
-//                 <a href="#" class="recipe-card">
-//                     <img src="${recipe.image_url}" alt="${recipe.title}">
-//                     <div class="recipe-info">
-//                         <h3>${recipe.title}</h3>
-//                             <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
-//                             (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
-//                             : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p>                     
-//                     </div>
-//                 </a>
-//             `).join("");
-//         })
-//         .catch(err => console.error(`Error loading ${categoryName}:`, err));
-// }
-
-// // Load all sliders at once
-// loadCategory("Asian", "slider-breakfast");
-// loadCategory("Quick & Easy", "slider-lunch");
-// loadCategory("Dinner", "slider-dinner");
-// loadCategory("Chicken", "slider-chicken");
-// loadCategory("Vegan", "slider-vegan");
-// loadCategory("Christmas", "slider-christmas");
-
 // Slider scroll buttons
 document.querySelectorAll(".slider-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -412,7 +376,7 @@ async function displayRecipesByCategory(category, sliderId) {
         card.innerHTML = `
             <div style="position: relative;">
                 <a href="#" class="recipe-link">
-                    <img src="${recipe.image_url}" alt="${recipe.title}">
+                    <img src="https://www.graigfarm.co.uk/cdn/shop/products/500_1400x.jpg?v=1616770783" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
                     <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
                         (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
@@ -472,6 +436,58 @@ async function displayFavorites() {
     });
 }
 
+// Hero Slider (main.html)
+async function loadHeroSlider(category) {
+    fetch(`http://localhost:5000/recipes/category/${category}`)
+        .then(res => res.json())
+        .then(data => {
+            const slider = document.getElementById("hero-slider");
+            const title = document.getElementById("hero-title");
+
+            title.textContent = `${category} Recipes`;
+
+            if (!data.length) {
+                slider.innerHTML = `<p>No recipes found for ${category}</p>`;
+                return;
+            }
+
+            slider.innerHTML = data.map(recipe => `
+                <div class="hero-card" onclick="openRecipe(${recipe.recipe_id})">
+                    <img src="${recipe.image_url}">
+                    <div class="hero-info">
+                        <h3>${recipe.title}</h3>
+                        <p>${recipe.prep_time + recipe.cook_time} mins</p>
+                    </div>
+                    <button class="favorite-btn" data-id="${recipe.recipe_id}">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            `).join("");
+
+            // ⭐ ADD BUTTON LOGIC HERE (after loading slider content)
+            const heroSlider = document.getElementById("hero-slider");
+            const btnLeft = document.getElementById("hero-left");
+            const btnRight = document.getElementById("hero-right");
+
+            btnLeft.onclick = () => {
+                heroSlider.scrollBy({ left: -350, behavior: "smooth" });
+            };
+
+            btnRight.onclick = () => {
+                heroSlider.scrollBy({ left: 350, behavior: "smooth" });
+            };
+        });
+}
+
+
+// Dropdown → Updates hero slider
+document.querySelectorAll(".category-link").forEach(link => {
+    link.addEventListener("click", () => {
+        const cat = link.dataset.category;
+        loadHeroSlider(cat);
+    });
+});
+
 
 window.addEventListener("DOMContentLoaded", () => {
     displayRecipes();
@@ -482,6 +498,11 @@ window.addEventListener("DOMContentLoaded", () => {
     displayRecipesByCategory("Vegan", "slider-vegan");
     displayRecipesByCategory("Christmas", "slider-christmas");
     displayFavorites();
-
+    loadHeroSlider("Breakfast");
     togglePassword();
 });
+
+window.openRecipe = function(id) {
+    window.location.href = `./html/recipe.html?id=${id}`;
+}
+

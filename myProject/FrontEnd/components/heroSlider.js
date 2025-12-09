@@ -39,5 +39,5 @@ export function loadHeroSlider(category) {
 
 // Make openRecipe available globally
 window.openRecipe = function(id) {
-    window.location.href = `./pages/recipe.html?id=${id}`;
+    window.location.href = `./html/recipe.html?id=${id}`;
 }
