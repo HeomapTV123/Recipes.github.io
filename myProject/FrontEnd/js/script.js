@@ -376,7 +376,7 @@ async function displayRecipesByCategory(category, sliderId) {
         card.innerHTML = `
             <div style="position: relative;">
                 <a href="#" class="recipe-link">
-                    <img src="https://www.graigfarm.co.uk/cdn/shop/products/500_1400x.jpg?v=1616770783" alt="${recipe.title}">
+                    <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
                     <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
                         (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
