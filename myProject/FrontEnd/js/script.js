@@ -335,15 +335,16 @@ async function displayRecipes() {
         card.classList.add("recipe-card");
 
         // 2. Set the inner HTML
-        // Notice we use 'far fa-heart' (Regular/Outline) by default
+        const totalTime = recipe.prep_time + recipe.cook_time;
+        const timeDisplay = totalTime < 60 
+            ? totalTime + " minutes" 
+            : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
         card.innerHTML = `
             <div style="position: relative;">
                 <a href="#" class="recipe-link">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
-                    <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
-                        (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
-                        : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
+                    <p>${timeDisplay}</p> 
                 </a>
                 <button class="favorite-btn" data-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
@@ -371,16 +372,17 @@ async function displayRecipesByCategory(category, sliderId) {
     recipes.forEach(recipe => {
         const card = document.createElement("div");
         card.classList.add("recipe-card");
-
+        const totalTime = recipe.prep_time + recipe.cook_time;
+        const timeDisplay = totalTime < 60 
+            ? totalTime + " minutes" 
+            : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
         // Set the inner HTML
         card.innerHTML = `
             <div style="position: relative;">
                 <a href="#" class="recipe-link">
                     <img src="https://www.graigfarm.co.uk/cdn/shop/products/500_1400x.jpg?v=1616770783" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
-                    <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
-                        (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
-                        : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
+                    <p>${timeDisplay}</p> 
                 </a>
                 <button class="favorite-btn" data-id="${recipe.id}">
                     <i class="far fa-heart"></i>
@@ -450,13 +452,16 @@ async function loadHeroSlider(category) {
                 slider.innerHTML = `<p>No recipes found for ${category}</p>`;
                 return;
             }
-
+            const totalTime = recipe.prep_time + recipe.cook_time;
+            const timeDisplay = totalTime < 60 
+            ? totalTime + " minutes" 
+            : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
             slider.innerHTML = data.map(recipe => `
                 <div class="hero-card" onclick="openRecipe(${recipe.recipe_id})">
                     <img src="${recipe.image_url}">
                     <div class="hero-info">
                         <h3>${recipe.title}</h3>
-                        <p>${recipe.prep_time + recipe.cook_time} mins</p>
+                        <p>${timeDisplay} mins</p>
                     </div>
                     <button class="favorite-btn" data-id="${recipe.recipe_id}">
                         <i class="far fa-heart"></i>
