@@ -11,7 +11,7 @@ function loadCategory(categoryName, sliderId) {
             }
 
             slider.innerHTML = recipes.map(recipe => `
-                <a href="#" class="recipe-card">
+                <a href="#" class="recipe-card" onclick="openRecipe(${recipe.recipe_id})">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <div class="recipe-info">
                         <h3>${recipe.title}</h3>
@@ -43,3 +43,8 @@ document.querySelectorAll(".slider-btn").forEach(btn => {
         });
     });
 });
+
+function openRecipe(id) {
+    window.location.href = `recipe.html?id=${id}`;
+}
+
