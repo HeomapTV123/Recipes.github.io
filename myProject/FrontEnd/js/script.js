@@ -244,7 +244,10 @@ document.addEventListener("click", async function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        const recipeId = btn.dataset.id;
+
+        console.log("Button dataset:" , btn.dataset);
+        const recipeId = btn.dataset.recipeId;
+        console.log("recipeId", recipeId);
         const icon = btn.querySelector('i');
         
         const isSuccess = await addToFavorites(recipeId);
@@ -346,7 +349,7 @@ async function displayRecipes() {
                     <h3>${recipe.title}</h3>
                     <p>${timeDisplay}</p> 
                 </a>
-                <button class="favorite-btn" data-id="${recipe.recipe_id}">
+                <button class="favorite-btn" data-recipe-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
                 </button>
             </div>
@@ -384,7 +387,7 @@ async function displayRecipesByCategory(category, sliderId) {
                     <h3>${recipe.title}</h3>
                     <p>${timeDisplay}</p> 
                 </a>
-                <button class="favorite-btn" data-id="${recipe.id}">
+                <button class="favorite-btn" data-recipe-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
                 </button>
             </div>
@@ -428,7 +431,7 @@ async function displayFavorites() {
                     <h3>${recipe.title}</h3>
                     <p>${timeDisplay}</p> 
                 </a>
-                <button class="favorite-btn" data-id="${recipe.recipe_id}">
+                <button class="favorite-btn" data-recipe-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
                 </button>
             </div>
@@ -452,22 +455,27 @@ async function loadHeroSlider(category) {
                 slider.innerHTML = `<p>No recipes found for ${category}</p>`;
                 return;
             }
-            const totalTime = recipe.prep_time + recipe.cook_time;
-            const timeDisplay = totalTime < 60 
-            ? totalTime + " minutes" 
-            : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
-            slider.innerHTML = data.map(recipe => `
+        
+            // MOVED LOGIC INSIDE THE MAP FUNCTION
+            slider.innerHTML = data.map(recipe => {
+                const totalTime = recipe.prep_time + recipe.cook_time;
+                const timeDisplay = totalTime < 60 
+                    ? totalTime + " minutes" 
+                    : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
+
+                return `
                 <div class="hero-card" onclick="openRecipe(${recipe.recipe_id})">
                     <img src="${recipe.image_url}">
                     <div class="hero-info">
                         <h3>${recipe.title}</h3>
-                        <p>${timeDisplay} mins</p>
+                        <p>${timeDisplay}</p>
                     </div>
-                    <button class="favorite-btn" data-id="${recipe.recipe_id}">
+                    <button class="favorite-btn" data-recipe-id="${recipe.recipe_id}">
                         <i class="far fa-heart"></i>
                     </button>
                 </div>
-            `).join("");
+                `;
+            }).join("");
 
             // ⭐ ADD BUTTON LOGIC HERE (after loading slider content)
             const heroSlider = document.getElementById("hero-slider");
