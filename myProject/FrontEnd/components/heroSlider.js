@@ -27,13 +27,13 @@ export function loadHeroSlider(category) {
             const btnLeft = document.getElementById("hero-left");
             const btnRight = document.getElementById("hero-right");
 
-            btnLeft.onclick = () => {
-                heroSlider.scrollBy({ left: -350, behavior: "smooth" });
-            };
+            // btnLeft.onclick = () => {
+            //     heroSlider.scrollBy({ left: -350, behavior: "smooth" });
+            // };
 
-            btnRight.onclick = () => {
-                heroSlider.scrollBy({ left: 350, behavior: "smooth" });
-            };
+            // btnRight.onclick = () => {
+            //     heroSlider.scrollBy({ left: 350, behavior: "smooth" });
+            // };
         });
 }
 
