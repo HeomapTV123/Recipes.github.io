@@ -594,7 +594,69 @@ searchField.addEventListener("keydown", (e) => {
     }
 })
 
+
+// Authentication check
+async function checkLoginStatus() {
+    try {
+        const response = await fetch('http://localhost:5000/check-auth');
+        const data = await response.json();
+
+        // Update login, register, and logout buttons
+        updateUI(data.isLoggedIn);
+
+
+        // redirect if trying to access protected pages
+        protectPage(data.isLoggedIn);
+    } catch (error) {
+        console.error("Failed to check authentication: ", error);
+    }
+}
+
+// Update UI of login, register, and logout button
+function updateUI(isLoggedIn) {
+    const loginLink = document.getElementById("nav-login");
+    const signupLink = document.getElementById("nav-signup");
+
+
+    if(isLoggedIn) {
+        if(loginLink) loginLink.style.display = "none";
+        if(signupLink) signupLink.style.display = "none";
+        if(logoutBtn) logoutBtn.style.display = "block";
+    }
+    else {
+        if(loginLink) loginLink.style.display = "block";
+        if(signupLink) signupLink.style.display = "block";
+        if(logoutBtn) logoutBtn.style.display = "none";
+    }
+}
+
+function protectPage(isLoggedIn) {
+    // current file name
+    const path = window.location.pathname;
+    const page = path.split("/").pop();
+
+    const protectedPages = ["saves.html", "mainAfterLogin.html"];
+
+    const guestPages = ["login.html", "signup.html"];
+
+    // if not logged in -> redirect to login page
+    if(!isLoggedIn && protectedPages.includes(page)) {
+        alert("You must be login to view this page.");
+        window.location.href = "login.html";
+    }
+
+    // if logged in but tried to access guest pages -> redirect to mainAferLogin.html
+    if(isLoggedIn && guestPages.includes(page)) {
+        window.location.href = "mainAfterLogin.html";
+    }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
+    
+    // run auth check first
+    checkLoginStatus();
+    loadHeroSlider("Breakfast");
+    
     displayRecipes();
     displayRecipesByCategory("Breakfast", "slider-breakfast");
     displayRecipesByCategory("Lunch", "slider-lunch");
@@ -606,7 +668,6 @@ window.addEventListener("DOMContentLoaded", () => {
     displayFavorites(); // saves.html
     displaySearchResults(); // search.html
 
-    loadHeroSlider("Breakfast");
     togglePassword();
 });
 

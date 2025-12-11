@@ -154,5 +154,20 @@ router.post('/search', async(req, res) => {
         res.status(500).json({ message: "Server error ", error: err.message});
     }
 });
+// check if user is logged in
+router.get("/check-auth", (req, res) => {
+    if(req.session && req.session.user) {
+        return res.json({
+            isLoggedIn: true,
+        });
+    }
+    else {
+        return res.json({
+            isLoggedIn: false
+        })
+    }
+});
+
+
 
 module.exports = router;
