@@ -382,7 +382,7 @@ async function displayRecipesByCategory(category, sliderId) {
                         (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
                         : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
                 </a>
-                <button class="favorite-btn" data-id="${recipe.id}">
+                <button class="favorite-btn" data-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
                 </button>
             </div>
@@ -503,6 +503,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.openRecipe = function(id) {
-    window.location.href = `./html/recipe.html?id=${id}`;
+    window.location.href = `/pages/recipe.html?id=${id}`;
 }
 
