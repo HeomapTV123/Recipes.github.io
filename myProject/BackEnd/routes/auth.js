@@ -126,25 +126,33 @@ router.post('/saves', async (req, res) => {
     }
 });
 
-router.get('/saves', async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ message: "You must be logged in to save recipes." });
+router.post('/search', async(req, res) => {
+    const keyword = req.body.keyword;
+
+    if(!keyword) {
+        return res.status(400).json({ message: "Cannot leave the search field empty"});
     }
 
     try {
+        const recipeSearched = await User.searchForRecipe(keyword);
+    
+        if(recipeSearched.length === 0) {
+            return res.status(404).json({
+                message: "No recipes found",
+                recipes: []
+            });
+        }
 
-        const userId = req.session.user.id;
-
-        const recipes = await User.getAllSaves(userId);
-
-        res.status(200).json(recipes);
+        res.json({
+            message: "Search successful",
+            count: recipeSearched.length,
+            recipes: recipeSearched
+        });
 
     } catch (error) {
-        console.error(error); // Good to log on server side
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: "Server error ", error: err.message});
     }
 });
-
-
 
 module.exports = router;

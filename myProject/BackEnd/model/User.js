@@ -75,6 +75,23 @@ class User {
             })
         })
     }
+
+    static searchForRecipe(keyword) {
+        return new Promise((resolve, reject) => {
+            const query = `
+            SELECT DISTINCT r.*
+            FROM recipe r
+            LEFT JOIN recipetag rt ON r.recipe_id = rt.recipe_id
+            LEFT JOIN tag t ON rt.tag_id = t.tag_id
+            WHERE r.title LIKE ? OR t.name LIKE ?
+            `
+            const searchTerm = `%${keyword}%`;
+            db.query(query, [searchTerm, searchTerm], (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
     }
+}
 module.exports = User;
 

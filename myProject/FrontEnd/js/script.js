@@ -382,12 +382,10 @@ async function displayRecipesByCategory(category, sliderId) {
         // Set the inner HTML
         card.innerHTML = `
             <div style="position: relative;">
-                <a href="#" class="recipe-link">
+                <a href="#" class="recipe-link" onclick="openRecipe(${recipe.recipe_id})">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
-                    <p>${ recipe.prep_time + recipe.cook_time < 60  ?  recipe.prep_time + recipe.cook_time + " minutes" : 
-                        (Math.round((recipe.prep_time + recipe.cook_time) / 60) > 1 ? Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hours" 
-                        : Math.round((recipe.prep_time + recipe.cook_time) / 60) + " hour")}</p> 
+                    <p>${timeDisplay}</p> 
                 </a>
                 <button class="favorite-btn" data-recipe-id="${recipe.recipe_id}">
                     <i class="far fa-heart"></i>
@@ -503,6 +501,98 @@ document.querySelectorAll(".category-link").forEach(link => {
     });
 });
 
+// Open recipe redirects to recipe.html
+window.openRecipe = function(id) {
+    window.location.href = `/html/recipe.html?id=${id}`;
+}
+
+// Display Search Results
+async function displaySearchResults() {
+            // get the keyword from the URL (?keyword=chicken)
+            const params = new URLSearchParams(window.location.search);
+            const keyword = params.get('query');
+
+            const resultsContainer = document.getElementById("results-container");
+            const searchTermDisplay = document.getElementById("search-term-display");
+            if(!keyword) {
+                resultsContainer.innerHTML = `
+                <p>No search keyword provided</p>
+                `;
+                return;
+            }
+
+            if(searchTermDisplay) {
+                searchTermDisplay.innerText = `Showing results for: "${keyword}"`;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/search', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ keyword: keyword })
+                });
+
+                const data = await response.json();
+
+                // clear the loading text
+                resultsContainer.innerHTML = '';
+
+                if(response.status === 404 || !data.recipes || data.recipes.length === 0) {
+                    resultsContainer.innerHTML = "<p>No recipes found.</p>";
+                    return;
+                }
+
+                data.recipes.forEach(recipe => {
+                    const totalTime = recipe.prep_time + recipe.cook_time;
+                    const timeDisplay = totalTime < 60 
+                    ? totalTime + " minutes" 
+                    : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
+                    
+                    const card = document.createElement("div");
+                    card.classList.add("recipe-card");
+
+                    card.innerHTML = `
+                    <div style="position: relative;">
+                        <a href="#" class="recipe-link">
+                            <img src="${recipe.image_url}" alt="${recipe.title}">
+                            <h3>${recipe.title}</h3>
+                            <p>${timeDisplay}</p> 
+                        </a>
+                        <button class="favorite-btn" data-recipe-id="${recipe.recipe_id}">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error: ", error);
+                resultsContainer.innerHTML = "<p>Something went wrong.</p>"
+            }
+}
+
+// Search function
+function searchForRecipe(keyword) {
+    if(!keyword) return;
+
+    const encodedKeyword = encodeURIComponent(keyword);
+
+    window.location.href = `/html/search.html?query=${encodedKeyword}`;
+}
+
+// Handle search field input
+const searchField = document.querySelector(".search-input");
+searchField.addEventListener("keydown", (e) => {
+    if(e.key === 'Enter') {
+
+        e.preventDefault();
+
+        const searchInput = searchField.value;
+        searchForRecipe(searchInput);
+    }
+})
 
 window.addEventListener("DOMContentLoaded", () => {
     displayRecipes();
@@ -512,12 +602,11 @@ window.addEventListener("DOMContentLoaded", () => {
     displayRecipesByCategory("Chicken", "slider-chicken");
     displayRecipesByCategory("Vegan", "slider-vegan");
     displayRecipesByCategory("Christmas", "slider-christmas");
-    displayFavorites();
+    
+    displayFavorites(); // saves.html
+    displaySearchResults(); // search.html
+
     loadHeroSlider("Breakfast");
     togglePassword();
 });
-
-window.openRecipe = function(id) {
-    window.location.href = `/pages/recipe.html?id=${id}`;
-}
 
