@@ -733,6 +733,7 @@ body {
     text-align: center;
     margin-bottom: 30px;
     font-size: 40px;
+    font-family: 'Georgia', serif;
 }
 
 
@@ -820,6 +821,60 @@ body {
     height: 350px;
 }
 
+.chefs {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Georgia', serif; /* Use a Serif font to match the image headers */
+}
+
+.chefs h1 {
+    text-align: center;
+}
+
+/* Grid Layout for the Cards */
+.chef-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    column-gap: 60px; /* Space between left and right column */
+    row-gap: 0; /* Vertical gap handled by padding/border */
+}
+
+/* Individual Card Styling */
+.chef-card {
+    display: flex; /* Flexbox puts image next to text */
+    align-items: flex-start;
+    padding: 30px 0;
+    border-bottom: 1px solid #e0e0e0; /* The separator line */
+}
+
+/* Image Styling */
+.chef-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Makes the image a circle */
+    object-fit: cover;
+    margin-right: 25px;
+    flex-shrink: 0; /* Prevents image from squishing */
+}
+
+/* Text Content Styling */
+.chef-info h3 {
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    color: #000;
+}
+
+.chef-bio {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+}
+
 
 /* ==========================
    SAVE PAGE
@@ -845,7 +900,7 @@ body {
 }
 
 /* recipe.html */
-.recipe-container {
+.recipe-page-container {
     max-width: 800px;
     margin: auto;
 }

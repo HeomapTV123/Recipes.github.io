@@ -348,7 +348,7 @@ async function displayRecipes() {
             ? totalTime + " minutes" 
             : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
         card.innerHTML = `
-            <div style="position: relative;">
+            <div style="position: relative;" onclick="openRecipe(${recipe.recipe_id})">
                 <a href="#" class="recipe-link">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
@@ -430,7 +430,7 @@ async function displayFavorites() {
             : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
         // Set the inner HTML
         card.innerHTML = `
-            <div style="position: relative;">
+            <div style="position: relative;" onclick="openRecipe(${recipe.recipe_id})">
                 <a href="#" class="recipe-link">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
@@ -560,7 +560,7 @@ async function displaySearchResults() {
 
                     card.innerHTML = `
                     <div style="position: relative;">
-                        <a href="#" class="recipe-link">
+                        <a href="#" class="recipe-link" onclick="openRecipe(${recipe.recipe_id})">
                             <img src="${recipe.image_url}" alt="${recipe.title}">
                             <h3>${recipe.title}</h3>
                             <p>${timeDisplay}</p> 
