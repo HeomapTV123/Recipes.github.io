@@ -270,7 +270,12 @@ document.addEventListener("click", async function(e) {
 // Get all recipes function (mainAfterLogin)
 async function getAllRecipes() {
     try {
-        const response = await fetch('http://localhost:5000/recipes');
+        const response = await fetch('http://localhost:5000/recipes', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
         if(!response.ok) {
             throw new Error(`Error: ${response.status}`);
@@ -278,7 +283,7 @@ async function getAllRecipes() {
 
         return await response.json() 
     } catch (error) {
-        console.error("Error fetching recipes: ", err);
+        console.error("Error fetching recipes: ", error);
         return [];
     }
 } 
@@ -315,7 +320,7 @@ async function getAllFavorites() {
 
         return await response.json();
     } catch (error) {
-        console.error("Error fetching favorite recipes: ", err);
+        console.error("Error fetching favorite recipes: ", error);
         return [];
     }
 }

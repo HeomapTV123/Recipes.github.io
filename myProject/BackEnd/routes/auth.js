@@ -126,6 +126,28 @@ router.post('/saves', async (req, res) => {
     }
 });
 
+// Get all favorites
+router.get('/saves', async (req, res) => {
+    if(!req.session.user) {
+        return res.status(401).json({ message: "You must be logged in to save recipes." });
+    }
+
+    try {
+        const userId = req.session.user.id;
+
+        if(!userId) {
+            return res.status(404).json({ message: "User ID not found." });
+        } 
+
+        const recipes = await User.getAllSaves(userId);
+
+        res.status(200).json(recipes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 router.post('/search', async(req, res) => {
     const keyword = req.body.keyword;
 
