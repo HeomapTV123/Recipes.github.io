@@ -24,3 +24,8 @@ exports.getRecipesByCategory = async (req, res) => {
     const [rows] = await Recipe.getByCategory(req.params.name);
     res.json(rows);
 };
+
+exports.getAllCategories = async (req, res) => {
+    const [rows] = await Recipe.getAllCategories();
+    res.json(rows);
+};

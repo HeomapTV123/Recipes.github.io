@@ -709,6 +709,25 @@ body {
     gap: 25px; /* space between star, user, logout */
 }
 
+/* Add Recipe button */
+.add-recipe-btn {
+    display: block;
+    background: #fff;
+    border: 2px solid #e32a2a;
+    border-radius: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #e32a2a;
+    font-weight: bold;
+    transition: 0.3s;
+    text-decoration: none;    
+}
+
+.add-recipe-btn:hover {
+    background: #e32a2a;
+    color: white;
+}
+
 /* Logout button */
 .logout-btn {
     padding: 10px 20px;
@@ -718,6 +737,7 @@ body {
     border: 2px solid #e32a2a;
     cursor: pointer;
     font-weight: bold;
+    transition: 0.3s;
 }
 .logout-btn:hover {
     background: #e32a2a;
@@ -800,6 +820,7 @@ body {
     letter-spacing: 1px;
     margin-bottom: 8px;
     color: #000;
+    margin-left: 10px;
 }
 
 .headline {
@@ -807,6 +828,7 @@ body {
     font-weight: 600;
     line-height: 1.4;
     margin: 0;
+    padding: 0 10px;
 }
 
 .article-card.featured {
@@ -916,4 +938,33 @@ body {
     padding: 15px;
     margin: 10px 0;
     border-radius: 12px;
+}
+
+/* addRecipeForm.html */
+.add-recipe-form-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Georgia', serif;
+}
+
+.add-recipe-form-title {
+    padding: 10px 10px;
+}
+
+#recipeLabel label{
+    position: absolute;
+    top: -5px;
+    left: 15px;
+}
+
+.input-box select{
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 17px;
+    padding-right: 40px; 
 }

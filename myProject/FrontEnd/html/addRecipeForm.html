@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Recipe Form</title>
+    <link rel="stylesheet" href="/css/main.css"> 
+</head>
+<body>
+    <div class="add-recipe-form-container">
+        <div class="add-recipe-form-title">
+                <h2>Add Your Own Recipe!</h2>
+        </div>
+        <form class="add-recipe-form" id="addRecipeForm">
+            <div class="input-box" id="recipeLabel">
+                    <label for="recipename">Recipe Name</label>
+                    <input type="text"  name="recipeName"  aria-describedby="helpId" placeholder="Enter Recipe Name">
+            </div>
+            <div class="input-box" id="recipeLabel">
+                    <label for="recipename">Category</label>
+                    <select name="categories" id="category-select">
+                        <option value="">--Choose a category--</option>
+                    </select>
+            </div>            
+            <div class="input-box" id="recipeLabel">
+                    <label for="recipename">Prep Time</label>
+                    <input type="text"  name="recipePrepTime"  aria-describedby="helpId" placeholder="Enter Prep Time">
+            </div>            
+            <div class="input-box" id="recipeLabel">
+                    <label for="recipename">Cook Time (in minutes)</label>
+                    <input type="text"  name="recipeCookTime"  aria-describedby="helpId" placeholder="Enter Cook Time">
+            </div>
+            <div class="input-box" id="recipeLabel">
+                    <label for="recipename">Cook Time (in minutes)</label>
+                    <input type="text"  name="recipeCookTime"  aria-describedby="helpId" placeholder="Enter Cook Time">
+            </div>
+        </form>
+    </div>
+</body>
+
+        <script type="module" src="/js/script.js"></script>
+</html>

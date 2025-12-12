@@ -161,15 +161,22 @@ function togglePassword() {
     const toggleBtn = document.getElementById("toggleBtn");
     const passwordContainer = document.getElementById("passwordContainer");
     const passwordField = document.querySelector('.password');
+
+    if(!toggleBtn || !passwordField) {
+        return;
+    }
+
     toggleBtn.addEventListener("click", function() {
         // Toggle type attribute
         const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordField.setAttribute('type', type);
     
         // Toggle the eye icon and container class for styling
-        passwordContainer.classList.toggle('active');
+        if(passwordContainer) {
+            passwordContainer.classList.toggle('active');
+        }
     });
-    }
+}
 
 
 // Log out function
@@ -325,6 +332,22 @@ async function getAllFavorites() {
     }
 }
 
+// Get all categories
+async function getAllCatergories() {
+    try {
+        const response = await fetch('http://localhost:5000/recipes/categories');
+
+        if(!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching categories", error);
+        return [];
+    }
+}
+
 // Display all recipes
 async function displayRecipes() {
     const container = document.querySelector('.recipe-container');
@@ -443,6 +466,38 @@ async function displayFavorites() {
         `;
 
         container.appendChild(card);
+    });
+}
+
+// Dropdown menu for categories (addRecipeForm.html)
+async function dropdownCategories() {
+    const container = document.getElementById("category-select");
+    
+    if(!container) {
+        return;
+    }
+
+    const categories = await getAllCatergories();
+
+    console.log(categories);
+
+    // Clear old recipes
+    container.innerHTML = `<option value="">--Choose a category--</option>`;
+
+    if (!categories || categories.length === 0) {
+        return;
+    }
+
+    categories.forEach(category => {
+        const option = document.createElement("option");
+
+        // set the value to category name
+        option.value = category.name;
+
+        // set the text content to category name
+        option.textContent = category.name;
+
+        container.appendChild(option);
     });
 }
 
@@ -589,6 +644,7 @@ function searchForRecipe(keyword) {
 
 // Handle search field input
 const searchField = document.querySelector(".search-input");
+if(searchField) {
 searchField.addEventListener("keydown", (e) => {
     if(e.key === 'Enter') {
 
@@ -597,8 +653,8 @@ searchField.addEventListener("keydown", (e) => {
         const searchInput = searchField.value;
         searchForRecipe(searchInput);
     }
-})
-
+});
+}
 
 // Authentication check
 async function checkLoginStatus() {
@@ -674,5 +730,6 @@ window.addEventListener("DOMContentLoaded", () => {
     displaySearchResults(); // search.html
 
     togglePassword();
+    dropdownCategories(); // addRecipeForm.html
 });
 

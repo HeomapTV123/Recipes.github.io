@@ -40,3 +40,8 @@ exports.getByCategory = (name) => {
         WHERE LOWER(c.name) = LOWER(?)
     `, [name]);
 };
+
+// Get all categories
+exports.getAllCategories = () => {
+    return db.promise().query("SELECT * FROM Category");
+};
