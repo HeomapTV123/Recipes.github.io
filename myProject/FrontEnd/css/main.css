@@ -454,6 +454,7 @@ body {
     display: flex;
     align-items: center;
     padding: 5px;
+    margin-bottom: 5px;
 }
 
 .input-box input {
@@ -942,14 +943,17 @@ body {
 
 /* addRecipeForm.html */
 .add-recipe-form-container {
-    max-width: 1200px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 40px 20px;
     font-family: 'Georgia', serif;
+    background: #fff;
+    border-radius: 20px;
 }
 
 .add-recipe-form-title {
-    padding: 10px 10px;
+    padding: 20px;
+    text-align: center;
 }
 
 #recipeLabel label{
@@ -967,4 +971,94 @@ body {
     margin: 10px;
     font-size: 17px;
     padding-right: 40px; 
+}
+
+.submit-btn {
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #e32a2a;
+    padding: 20px;
+    color:#e32a2a;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+.upload-image {
+    width: 100%;
+    min-height: 250px; /* Gives it a box shape */
+    margin: 20px 0;
+    background: #f8f8f8; /* Light gray background */
+    border: 2px dashed #ccc; /* Classic upload dashed line */
+    border-radius: 20px; /* Matches your form radius */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative; /* Essential for the label overlay */
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.upload-image:hover {
+    border-color: #e32a2a; /* Changes border to your theme red */
+    background: #fff5f5; /* Very faint red tint */
+}
+
+#input-file {
+    display: none;
+}
+
+#drop-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 10; /* Ensures it sits on top */
+}
+
+#img-view {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-view img {
+    width: 80px; /* Sets a standard icon size */
+    height: auto;
+    margin-bottom: 15px;
+    opacity: 0.7; /* Slight transparency for style */
+}
+
+#img-view p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+#img-view span {
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    color: #777;
 }
