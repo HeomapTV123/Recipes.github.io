@@ -943,7 +943,7 @@ body {
 
 /* addRecipeForm.html */
 .add-recipe-form-container {
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 40px 20px;
     font-family: 'Georgia', serif;
@@ -1043,7 +1043,7 @@ body {
 }
 
 #img-view img {
-    width: 80px; /* Sets a standard icon size */
+    width: 80px; 
     height: auto;
     margin-bottom: 15px;
     opacity: 0.7; /* Slight transparency for style */
@@ -1061,4 +1061,93 @@ body {
     font-family: 'Georgia', serif;
     font-size: 13px;
     color: #777;
+}
+
+.unit-types {
+    display: flex;
+    flex-direction: column;
+}
+
+.unit-types h3{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.unit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2px solid #000;
+}
+
+.units {
+    padding: 20px;
+}
+
+.ingredient-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-list h3 {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.ingredient-quantity {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.ingredient {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient label {
+    margin-bottom: 5px;
+}
+
+.quantity {
+    display: flex;
+    flex-direction: column;
+}
+
+.quantity label {
+    margin-bottom: 5px;
+}
+
+.unit {
+    display: flex;
+    flex-direction: column;
+}
+
+.unit label {
+    margin-bottom: 5px;
+}
+
+.quantity-unit {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.add-ingredient-btn {
+    padding: 10px;
+    background: #fff7f0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    border-color: #e32a2a;
+    color:#e32a2a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.add-ingredient-btn:hover {
+    color: white;
+    background: #e32a2a;
 }
