@@ -11,6 +11,7 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
 }
 
+
 /* Hide horizontal scrollbars */
 .recipe-slider::-webkit-scrollbar,
 .hero-slider::-webkit-scrollbar {
@@ -1150,4 +1151,69 @@ body {
 .add-ingredient-btn:hover {
     color: white;
     background: #e32a2a;
+}
+
+/* Tags */
+.recipe-tag {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.input-box li {
+    display: flex;
+    align-items: center;
+}
+
+.input-box ul {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 20px;
+    border: 1px solid #000;
+    padding-left: 15px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 17px;
+    padding-right: 40px; 
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input-box ul li {
+    list-style: none;
+    padding: 5px 8px 5px 10px;
+    background: #f2f2f2;
+    margin: 4px 3px;
+    border-radius: 20px;
+    border: 1px solid #e3d1e1;
+}
+
+.input-box ul li i{
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
+    background: #dfdfdf;
+    border-radius: 50%;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #808080;
+    cursor: pointer;
+}
+
+.input-box ul li i:hover{
+    background: #979797;
+    color: #000;
+}
+
+.input-box ul input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    margin-left: -5px;
 }

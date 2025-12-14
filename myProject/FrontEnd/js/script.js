@@ -781,6 +781,47 @@ if(container) {
     });
 }
 
+// Add ingredient tags
+let ul;
+let input;
+
+let tags = [];
+
+function createTag() {
+    ul.querySelectorAll("li").forEach(li => li.remove()); // remove duplicate tags
+        tags.slice().reverse().forEach(tag => {
+            let liTag = `
+            <li>${tag} <i class="uit uit-multiply" onclick="removeTag(this, '${tag}')"></i></li>
+            `;
+            ul.insertAdjacentHTML("afterbegin", liTag); // inserting li inside ul tag
+            });
+}
+
+window.removeTag = function(element, tag) {
+    let index = tags.indexOf(tag); // getting the removed tag index
+    tags = [...tags.slice(0, index), ...tags.slice(index + 1)]; // removing or excluding selected tag from an array
+    element.parentElement.remove(); // removing li of removed tag
+}
+
+function addTag(e) {
+    if(e.key == "Enter") {
+        e.preventDefault();
+        let tag = e.target.value.replace(/\s+/g, ' '); // removing unwanted spaces from user tag
+        if(tag.length > 1 && !tags.includes(tag)) { // if tag length is greater than 1 and tag does not exist already
+            tag.split(',').forEach(tag => { // splitting each tag from comma (,)
+                tags.push(tag); // adding each tag inside array tags
+                createTag();
+            });
+        }
+        e.target.value = "";
+    }
+}
+
+if(input) {
+    input.addEventListener("keydown", addTag);
+}
+
+
 window.addEventListener("DOMContentLoaded", () => {
     
     // run auth check first
@@ -800,5 +841,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
     togglePassword();
     dropdownCategories(); // addRecipeForm.html
+
+    ul = document.getElementById("tag-list");
+    if(!ul) {
+        return;
+    }
+
+    input = ul.querySelector(".tag-input");
+    input.addEventListener("keydown", addTag);
 });
 

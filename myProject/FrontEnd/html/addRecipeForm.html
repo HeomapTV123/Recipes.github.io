@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add a Recipe Form</title>
     <link rel="stylesheet" href="/css/main.css"> 
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css">
 </head>
 <body>
     <div class="add-recipe-form-container">
@@ -13,22 +14,28 @@
         </div>
         <form class="add-recipe-form" id="addRecipeForm">
             <div class="input-box" id="recipeLabel">
-                    <label for="recipename">Recipe Name</label>
+                    <label for="recipeName">Recipe Name</label>
                     <input type="text"  name="recipeName"  aria-describedby="helpId" placeholder="Enter Recipe Name">
             </div>
             <div class="input-box" id="recipeLabel">
-                    <label for="recipename">Category</label>
+                    <label for="recipeCategory">Category</label>
                     <select name="categories" id="category-select">
                         <option value="">--Choose a category--</option>
                     </select>
             </div>            
             <div class="input-box" id="recipeLabel">
-                    <label for="recipename">Prep Time (in minutes)</label>
+                    <label for="recipePreptime">Prep Time (in minutes)</label>
                     <input type="text"  name="recipePrepTime"  aria-describedby="helpId" placeholder="(eg. 20 minutes)">
             </div>            
             <div class="input-box" id="recipeLabel">
-                    <label for="recipename">Cook Time (in minutes)</label>
+                    <label for="recipeCooktime">Cook Time (in minutes)</label>
                     <input type="text"  name="recipeCookTime"  aria-describedby="helpId" placeholder="Enter Cook Time">
+            </div>
+            <div class="input-box" id="recipeLabel" class="recipe-tag">
+                    <label for="recipeTag">Tags</label>
+                    <ul id="tag-list">
+                       <input type="text" class="tag-input" placeholder="Enter tags (e.g chicken, rice)">
+                    </ul>
             </div>
             <div class="unit-types">
                 <h3>Unit Types</h3>
@@ -64,9 +71,7 @@
             <div class="ingredient-list">
                 <h3>List of Ingredients</h3>
                 <div class="ingredient-quantity-container">
-                    <div class="ingredient-quantity">
-
-                    </div>
+                    <div class="ingredient-quantity"></div>
                 </div>
                 <button type="button" class="add-ingredient-btn">+ Add Ingredient</button>
             </div>
@@ -79,7 +84,6 @@
                         <span>Upload any images to desktop</span>
                     </div>
             </div>
-
             <button type="submit" class="submit-btn">Submit</button>
             <div class="homepage-link">
                 <p>Go back to 
