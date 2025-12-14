@@ -728,6 +728,59 @@ function uploadImage() {
     imageView.style.border = "none";
 }
 
+// Add an ingredient in the recipe form
+const addIngredientBtn = document.querySelector(".add-ingredient-btn");
+if(addIngredientBtn) {
+    addIngredientBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        addIngredient();
+    });
+}
+
+function addIngredient() {
+    const container = document.querySelector(".ingredient-quantity-container");
+
+    if(!container) {
+        return;
+    }
+
+    const ingredient = document.createElement("div");
+    ingredient.classList.add("ingredient-quantity");
+
+    ingredient.innerHTML = `
+                    <div class="ingredient">
+                        <label for="ingredient">Ingredient</label>
+                        <input type="text" name="ingredient" aria-describedby="helpId">
+                    </div>
+                    <div class="quantity">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" aria-describedby="helpId">
+                    </div>
+                    <div class="unit">
+                        <label for="unit">Unit</label>
+                        <input type="text" name="unit" aria-describedby="helpId">
+                    </div>
+                    <button type="button" class="delete-ingredient-btn">
+                        Delete
+                    </button>
+    `;
+
+    container.appendChild(ingredient);
+}
+
+// Delete an ingredient
+const container = document.querySelector(".ingredient-quantity-container");
+if(container) {
+    container.addEventListener("click", function(e) {
+        if(e.target.classList.contains("delete-ingredient-btn")) {
+            e.preventDefault();
+
+            // Remove the ingredient block
+            e.target.closest(".ingredient-quantity").remove();
+        }
+    });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     
     // run auth check first
