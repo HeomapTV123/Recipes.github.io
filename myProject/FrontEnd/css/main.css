@@ -1217,3 +1217,23 @@ body {
     border: none;
     margin-left: -5px;
 }
+
+/* Delete ingredient button */
+.delete-ingredient-btn {
+    background: red;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.delete-ingredient-btn:hover {
+    background: rgb(193, 0, 0);
+    font-weight: bolder;
+}
