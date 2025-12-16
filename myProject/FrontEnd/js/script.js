@@ -750,15 +750,15 @@ function addIngredient() {
     ingredient.innerHTML = `
                     <div class="ingredient">
                         <label for="ingredient">Ingredient</label>
-                        <input type="text" name="ingredient" aria-describedby="helpId">
+                        <input type="text" name="ingredient[]" aria-describedby="helpId">
                     </div>
                     <div class="quantity">
                         <label for="quantity">Quantity</label>
-                        <input type="number" name="quantity" aria-describedby="helpId">
+                        <input type="number" name="quantity[]" aria-describedby="helpId">
                     </div>
                     <div class="unit">
                         <label for="unit">Unit</label>
-                        <input type="text" name="unit" aria-describedby="helpId">
+                        <input type="text" name="unit[]" aria-describedby="helpId">
                     </div>
                     <button type="button" class="delete-ingredient-btn">
                         Delete
@@ -821,6 +821,95 @@ if(input) {
     input.addEventListener("keydown", addTag);
 }
 
+// Add Cooking Steps Section
+const addStepBtn = document.getElementById("addStepBtn");
+let stepIndex = 0;
+
+// Create Cooking Step HTML
+function createStep(index) {
+    const stepDiv = document.createElement("div");
+    stepDiv.classList.add("cooking-step");
+    stepDiv.innerHTML = `
+                        <div class="step-header">
+                            <h4>Step ${index + 1}</h4>
+                            <button type="button" class="delete-step-btn">Delete</button>
+                        </div>
+        
+                        <div class="step-form-group">
+                            <label class="step-label">Instruction</label>
+                            <textarea class="step-input" name="steps[${index}][instruction]" rows="3" required 
+                            placeholder="Describe this step..."></textarea>            
+                        </div>
+
+                        <div class="step-row">
+                            <div class="step-form-group step-col-small">
+                                <label class="step-label">Duration (mins)</label>
+                                <input type="number" class="step-input" name="steps[${index}][duration]" placeholder="0">
+                            </div>
+                            <div class="step-form-group step-col-small">
+                                <label class="step-label">Chef's Tip (Optional)</label>
+                                <input type="text" class="step-input" name="steps[${index}][duration]">
+                            </div> 
+                        </div>
+    `;
+    return stepDiv;
+}
+
+// Add cooking steps into container
+function addCookingStep() {
+    const container = document.getElementById("steps-container");
+    if(!container) {
+        return;
+    }
+
+    const newStep = createStep(stepIndex);
+    container.appendChild(newStep);
+
+    stepIndex++;
+}
+
+if(addStepBtn) {
+    addStepBtn.addEventListener("click", addCookingStep);
+}
+
+// Update step index (2 -> 1)
+function updateStepIndex() {
+    const steps = document.querySelectorAll(".cooking-step");
+
+    // Loop through every step in the DOM
+    steps.forEach((step, index) => {
+        // update the visual header
+        const header = step.querySelector(".step-header h4");
+        if(header) {
+            header.textContent = `Step ${index + 1}`;
+        }
+
+        // changes "steps[5][instruction] to steps[2][instruction]"
+        const inputs = step.querySelectorAll("input, textarea, select");
+        inputs.forEach(input => {
+            const name = input.getAttribute("name");
+            if(name) {
+                // find steps[any_number] and replace with steps[current_index]
+                const newName = name.replace(/steps\[\d+\]/, `steps[${index}]`);
+                input.setAttribute("name", newName);
+            }
+        });
+    });
+
+    stepIndex = steps.length;
+}
+
+// Delete cooking step from container
+const stepsContainer = document.getElementById("steps-container");
+if(stepsContainer) {
+    stepsContainer.addEventListener("click", function(e) {
+        if(e.target.classList.contains("delete-step-btn")) {
+            e.preventDefault();
+            e.target.closest(".cooking-step").remove();
+            updateStepIndex();
+        }
+    });
+}
 
 window.addEventListener("DOMContentLoaded", () => {
     

@@ -92,6 +92,15 @@ class User {
             });
         });
     }
+    
+    static addRecipe({recipe_id, step_number, instruction,
+                     duration_minutes, image_url = null, video_url = null,
+                     tip}) {
+        return new Promise((resolve, reject) => {
+            db.query("INSERT INTO ")
+        })
+    }
+    
 }
 module.exports = User;
 

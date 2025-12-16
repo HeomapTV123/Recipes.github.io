@@ -17,7 +17,7 @@ fetch(`http://localhost:5000/recipes/${recipeId}/ingredients`)
     .then(data => {
         const ul = document.getElementById("ingredient-list");
         ul.innerHTML = data.map(i => `
-            <li>${i.quantity} ${i.unit} ${i.name}</li>
+            <li>${i.quantity} ${i.unit} of ${i.name}</li>
         `).join("");
     });
 
@@ -30,6 +30,7 @@ fetch(`http://localhost:5000/recipes/${recipeId}/steps`)
             <div class="step-card">
                 <h3>Step ${step.step_number}</h3>
                 <p>${step.instruction}</p>
+                <p>Duration: ${step.duration_minutes} minutes</p>
             </div>
         `).join("");
     });

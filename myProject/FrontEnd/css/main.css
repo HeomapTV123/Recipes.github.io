@@ -1225,6 +1225,7 @@ body {
     font-weight: bold;
     color: white;
     cursor: pointer;
+    border: 1px solid #dc3545;
     border-radius: 5px;
     padding: 10px;
     height: 15px;
@@ -1236,4 +1237,116 @@ body {
 .delete-ingredient-btn:hover {
     background: rgb(193, 0, 0);
     font-weight: bolder;
+}
+
+/* Add cooking step form */
+/* Container for the whole step block */
+.ingredient-steps {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-steps h3 {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.cooking-step {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Header section with "Step X" and Delete button */
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.step-header h4 {
+    margin: 0;
+    color: #333;
+    font-weight: 700;
+}
+
+.delete-step-btn {
+    color: white;
+    border: 1px solid #dc3545;
+    background: red;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.delete-step-btn:hover {
+    background: rgb(193, 0, 0);
+    color: white;
+}
+
+/* Form inputs styling */
+.step-form-group {
+    margin-bottom: 15px;
+}
+
+.step-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.step-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+    font-family: inherit;
+}
+
+.step-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Layout for Duration and Tip row */
+.step-row {
+    display: flex;
+    gap: 20px;
+}
+
+.step-col-small {
+    flex: 1; /* Takes up 1 part of space */
+}
+
+.step-col-large {
+    flex: 2; /* Takes up 2 parts of space */
+}
+
+.add-step-btn {
+    padding: 10px;
+    background: #fff7f0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    border-color: #e32a2a;
+    color:#e32a2a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.add-step-btn:hover {
+    color: white;
+    background: #e32a2a;
 }
