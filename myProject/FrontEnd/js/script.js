@@ -848,7 +848,7 @@ function createStep(index) {
                             </div>
                             <div class="step-form-group step-col-small">
                                 <label class="step-label">Chef's Tip (Optional)</label>
-                                <input type="text" class="step-input" name="steps[${index}][duration]">
+                                <input type="text" class="step-input" name="steps[${index}][tip]">
                             </div> 
                         </div>
     `;
