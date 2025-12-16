@@ -1350,3 +1350,9 @@ body {
     color: white;
     background: #e32a2a;
 }
+
+.error-message {
+    color: red;
+    padding: 15px;
+    margin-top: -30px;
+}

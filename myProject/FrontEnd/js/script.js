@@ -911,6 +911,131 @@ if(stepsContainer) {
     });
 }
 
+// SUBMIT RECIPE FORM
+const addRecipeForm = document.getElementById("addRecipeForm");
+if(addRecipeForm) {
+    addRecipeForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        addRecipe();
+    })
+}
+
+async function addRecipe() {
+    const titleInput = document.querySelector('input[name="recipeName"]');
+    if(!titleInput.value.trim()) {
+        const error = document.getElementById("nameError");
+        error.textContent = "";
+        error.textContent = "Please enter a recipe name";
+        return;
+    }
+    else {
+        const error = document.getElementById("nameError");
+        error.textContent = "";
+    }
+
+    const categoryInput = document.getElementById("category-select");
+    if(categoryInput.value === "") {
+        const error = document.getElementById("categoryError");
+        error.textContent = "";
+        error.textContent = "Please choose a category";
+        return;
+    }
+    else {
+        const error = document.getElementById("categoryError");
+        error.textContent = "";
+    }
+
+    const prepInput = document.querySelector('input[name="recipePrepTime"]');
+    if(!prepInput.value.trim()) {
+        const error = document.getElementById("prepTimeError");
+        error.textContent = "";
+        error.textContent = "Please enter a prepping time";
+        return;
+    }
+    else {
+        const error = document.getElementById("prepTimeError");
+        error.textContent = "";
+    }
+    
+    const cookInput = document.querySelector('input[name="recipeCookTime"]');
+    if(!cookInput.value.trim()) {
+        const error = document.getElementById("cookTimeError");
+        error.textContent = "";
+        error.textContent = "Please enter a cooking time";
+        return;
+    }
+    else {
+        const error = document.getElementById("cookTimeError");
+        error.textContent = "";
+    }
+    
+    const formData = new FormData();
+    formData.append('title', titleInput.value); // backend expects 'title'
+    formData.append('prep_time', parseInt(prepInput.value) || 0) // expects 'prep_time'
+    formData.append('cook_time', parseInt(cookInput.value) || 0);
+    formData.append('servings', 1); // default 1 serving
+
+    // Map ingredients (Arrays)
+    const ingNames = document.querySelectorAll('input[name="ingredient[]"]');
+    const ingQtys = document.querySelectorAll('input[name="quantity[]"]');
+    const ingUnits = document.querySelectorAll('input[name="unit[]"]');
+
+    ingNames.forEach((input, i) => {
+        // only add if name is not empty
+        if(input.value.trim() !== "") {
+            // append with key 'ingredient' (no brackets) so Multer/Express sees an array
+            formData.append('ingredient', input.value);
+            formData.append('quantity', ingQtys[i] ? ingQtys[i].value : 0);
+            formData.append('unit', ingUnits[i] ? ingUnits[i].value : '');
+        }
+    });
+
+    // data.steps[i].instruction
+    const stepInputs = document.querySelectorAll('#steps-container input, #steps-container textarea');
+    stepInputs.forEach(input => {
+        if(input.name && input.value) {
+            formData.append(input.name, input.value);
+        }
+    });
+
+    // Map image
+    // Your HTML file input has ID "input-file" but NO name attribute. 
+    // We must grab it by ID and append it as 'image' for upload.single('image')
+    const fileInput = document.getElementById('input-file');
+    if(fileInput && fileInput.files[0]) {
+        formData.append('image', fileInput.files[0]);
+    }
+
+    // Map tags
+    // You have a global 'tags' array in your JS. 
+    // The backend doesn't save them in 'addRecipe' yet, but here is how you send them.
+    if (typeof tags !== 'undefined' && Array.isArray(tags)) {
+        // Sending as a JSON string is often safer for complex arrays in FormData
+        formData.append('tags', JSON.stringify(tags)); 
+    }
+    
+    try {
+        const response = await fetch('http://localhost:5000/add-recipe', {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if(response.ok) {
+            alert("Success! Recipe saved.");
+            window.location.href = "/html/mainAfterLogin.html";
+        }
+        else {
+            console.error(result);
+            alert("Error: " + (result.message || "Failed to save recipe"));
+        }
+    } catch (error) {
+        console.error("Network Error: ", error);
+        alert("Could not connect to server.");
+    }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     
     // run auth check first

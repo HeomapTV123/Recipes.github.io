@@ -1,7 +1,8 @@
 const express = require("express");
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
-const session = require("express-session");
+const multer = require("multer");
+const path = require("path");
 require("dotenv").config();
 
 const router = express.Router();
@@ -190,6 +191,38 @@ router.get("/check-auth", (req, res) => {
     }
 });
 
+// multer setup
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        // add folder named "public/uploads" in your project
+        cb(null, "public/uploads");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({ storage: storage })
+
+// post a recipe
+router.post('/add-recipe', upload.single('image'), async (req, res) => {
+    try {
+        const userId = req.session.user_id; // Assuming you have a logged in user
+        const imageUrl = req.file ? '/uploads/' + req.file.filename : null;
+
+        // req.body contains the form fields (title, ingredient[], steps[][instruction], etc)
+        const newRecipeId = await User.addRecipe(req.body, userId, imageUrl);
+
+        res.status(200).json({ 
+            message: "Recipe created successfully!", 
+            recipeId: newRecipeId 
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error saving recipe");
+    }
+});
 
 
 module.exports = router;

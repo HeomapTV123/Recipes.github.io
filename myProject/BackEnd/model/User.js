@@ -92,13 +92,103 @@ class User {
             });
         });
     }
-    
-    static addRecipe({recipe_id, step_number, instruction,
-                     duration_minutes, image_url = null, video_url = null,
-                     tip}) {
-        return new Promise((resolve, reject) => {
-            db.query("INSERT INTO ")
-        })
+    /**
+     * Adds a full recipe including ingredients and steps using a Transaction.
+     * 
+     * @param {Object} data - The full request body (title, ingredients array, steps array, etc)
+     * @param {number} userId - The ID of the logged-in user
+     * @param {string|null} imageUrl - The path to the uploaded image
+     */
+    static addRecipe(data, userId, imageUrl = null) {
+        return new Promise(async(resolve, reject) => {
+            const query = (sql, params) => {
+                return new Promise((res, rej) => {
+                   db.query(sql, params ,(err, result) => {
+                        if(err) rej(err);
+                        else res(result);
+                   }); 
+                });
+            };
+
+            try {
+                await query("START TRANSACTION");
+                // INSERT RECIPE
+                const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
+
+                const recipeResult = await query(
+                    "INSERT INTO Recipe (user_id, title, slug, description, prep_time, cook_time, servings, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    [
+                        userId,
+                        data.title,
+                        slug, 
+                        data.description || '', 
+                        data.prep_time || 0, 
+                        data.cook_time || 0, 
+                        data.servings || 1, 
+                        imageUrl
+                    ]
+                );
+                const recipeId = recipeResult.insertId;
+
+                // PROCESS INGREDIENTS
+                if(data.ingredient && Array.isArray(data.ingredient)) {
+                    for(let i = 0; i < data.ingredient.length; i++) {
+                        const name = data.ingredient[i];
+                        const qty = data.quantity ? data.quantity : 0;
+                        const unit = data.unit ? data.unit[i] : '';
+
+                        if(!name || name.trim() === '') continue;
+
+                        // check if ingredient exists to reuse ID
+                        let ingId;
+                        const existingIng = await query("SELECT ingredient_id FROM Ingredient WHERE name = ?", [name]);
+
+                        if(existingIng.length > 0) {
+                            ingId = existingIng[0].ingredient_id;
+                        } 
+                        else {
+                            // create new ingredient if it doesn't exist
+                            const newIng = await query("INSERT INTO Ingredient (name) VALUES (?)", [name]);
+
+                            ingId = newIng.insertId;
+                        }
+                        await query(
+                            "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, quantity, unit, position) VALUES (?, ?, ?, ?, ?)",
+                            [recipeId, ingId, qty, unit, i]
+                        );
+                    }
+                }
+
+                // ==========================================
+                // C. PROCESS STEPS
+                // ==========================================
+                if (data.steps && Array.isArray(data.steps)) {
+                    for (let i = 0; i < data.steps.length; i++) {
+                        const step = data.steps[i];
+                        
+                        // Note: step_number is i + 1
+                        await query(
+                            "INSERT INTO Step (recipe_id, step_number, instruction, duration_minutes, tip, video_url) VALUES (?, ?, ?, ?, ?, ?)",
+                            [
+                                recipeId, 
+                                i + 1, 
+                                step.instruction, 
+                                step.duration || null, 
+                                step.tip || null, // Make sure JS input name is "tip"
+                                step.video_url || null
+                            ]
+                        );
+                    }
+                }
+
+                // COMMIT EVERYTHING
+                await query("COMMIT");
+                resolve(recipeId);
+            } catch (err) {
+                await query("ROLLBACK");
+                reject(err);
+            }
+        });
     }
     
 }

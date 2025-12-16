@@ -17,20 +17,28 @@
                     <label for="recipeName">Recipe Name</label>
                     <input type="text"  name="recipeName"  aria-describedby="helpId" placeholder="Enter Recipe Name">
             </div>
+            <div class="error-message" id="nameError"></div>
+
             <div class="input-box" id="recipeLabel">
                     <label for="recipeCategory">Category</label>
                     <select name="categories" id="category-select">
                         <option value="">--Choose a category--</option>
                     </select>
             </div>            
+            <div class="error-message" id="categoryError"></div>
+
             <div class="input-box" id="recipeLabel">
                     <label for="recipePreptime">Prep Time (in minutes)</label>
                     <input type="text"  name="recipePrepTime"  aria-describedby="helpId" placeholder="(eg. 20 minutes)">
-            </div>            
+            </div>
+            <div class="error-message" id="prepTimeError"></div>
+            
             <div class="input-box" id="recipeLabel">
                     <label for="recipeCooktime">Cook Time (in minutes)</label>
                     <input type="text"  name="recipeCookTime"  aria-describedby="helpId" placeholder="Enter Cook Time">
             </div>
+            <div class="error-message" id="cookTimeError"></div>
+
             <div class="input-box" id="recipeLabel" class="recipe-tag">
                     <label for="recipeTag">Tags</label>
                     <ul id="tag-list">
