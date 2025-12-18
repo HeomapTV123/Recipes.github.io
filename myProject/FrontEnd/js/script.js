@@ -685,11 +685,30 @@ async function checkLoginStatus() {
 function updateUI(isLoggedIn, role) {
 
     const adminDashboardBtn = document.getElementById("adminDashboardBtn");
+    const loginLink = document.getElementById("nav-login");
+    const signUpLink = document.getElementById("nav-signup");
+    const logOutLink = document.querySelector(".logout-btn");
+    const favBtn = document.querySelector(".fav-btn");
+    const userIcon = document.querySelector(".user");
 
     if(isLoggedIn && role === "admin") {
         adminDashboardBtn.innerHTML = `
             <button class="dashboard-btn" onclick="redirectToDashboard()">Dashboard</button>        
         `;
+    }
+    else if(isLoggedIn) {
+        loginLink.style.display = "none";
+        signUpLink.style.display = "none";
+        logOutLink.style.display = "block";
+        favBtn.style.display = "block";
+        userIcon.style.display = "block";
+    }
+    else {
+        loginLink.style.display = "block";
+        signUpLink.style.display = "block";
+        logOutLink.style.display = "none";
+        favBtn.style.display = "none";
+        userIcon.style.display = "none";        
     }
 }
 
