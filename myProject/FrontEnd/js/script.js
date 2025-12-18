@@ -7,6 +7,9 @@ const signUpForm = document.getElementById("signUpForm");
 // Log Out Button
 const logoutBtn = document.querySelector(".logout-btn");
 
+// Dashboard Button
+const dashboardBtn = document.getElementById("dashboard-btn");
+
 // Slider scroll buttons
 document.querySelectorAll(".slider-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -65,7 +68,12 @@ loginForm.addEventListener("submit", async function(e) {
 
     const result = await response.json();
     if(result.message === "Login successful") {
-        window.location.href = "./mainAfterLogin.html";
+        if(result.role === 'admin') {
+            window.location.href = "./adminDashboard.html";
+        }
+        else {
+            window.location.href = "./mainAfterLogin.html";
+        }
     }
     else {
         passwordLoginError.innerHTML = `
@@ -227,7 +235,7 @@ async function addToFavorites(recipeId) {
         if(!response.ok) {
             if(response.status === 401) {
                 alert(result.message);
-                window.location.href = "html/login.html";
+                window.location.href = "/html/login.html";
                 return false;
             }
             
@@ -663,7 +671,7 @@ async function checkLoginStatus() {
         const data = await response.json();
 
         // Update login, register, and logout buttons
-        updateUI(data.isLoggedIn);
+        updateUI(data.isLoggedIn, data.role);
 
 
         // redirect if trying to access protected pages
@@ -674,20 +682,14 @@ async function checkLoginStatus() {
 }
 
 // Update UI of login, register, and logout button
-function updateUI(isLoggedIn) {
-    const loginLink = document.getElementById("nav-login");
-    const signupLink = document.getElementById("nav-signup");
+function updateUI(isLoggedIn, role) {
 
+    const adminDashboardBtn = document.getElementById("adminDashboardBtn");
 
-    if(isLoggedIn) {
-        if(loginLink) loginLink.style.display = "none";
-        if(signupLink) signupLink.style.display = "none";
-        if(logoutBtn) logoutBtn.style.display = "block";
-    }
-    else {
-        if(loginLink) loginLink.style.display = "block";
-        if(signupLink) signupLink.style.display = "block";
-        if(logoutBtn) logoutBtn.style.display = "none";
+    if(isLoggedIn && role === "admin") {
+        adminDashboardBtn.innerHTML = `
+            <button class="dashboard-btn" onclick="redirectToDashboard()">Dashboard</button>        
+        `;
     }
 }
 
@@ -1036,32 +1038,171 @@ async function addRecipe() {
     }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    
-    // run auth check first
-    checkLoginStatus();
-    loadHeroSlider("Breakfast");
-    
-    displayRecipes();
-    displayRecipesByCategory("Breakfast", "slider-breakfast");
-    displayRecipesByCategory("Lunch", "slider-lunch");
-    displayRecipesByCategory("Dinner", "slider-dinner");
-    displayRecipesByCategory("Chicken", "slider-chicken");
-    displayRecipesByCategory("Vegan", "slider-vegan");
-    displayRecipesByCategory("Christmas", "slider-christmas");
-    
-    displayFavorites(); // saves.html
-    displaySearchResults(); // search.html
+// ADMIN DASHBOARD
+// initialize the admin dashboard
+async function initAdminDashboard() {
+    try {
+        // verify if user is admin
+        const response = await fetch('http://localhost:5000/check-auth');
+        const user = await response.json();
 
-    togglePassword();
-    dropdownCategories(); // addRecipeForm.html
-
-    ul = document.getElementById("tag-list");
-    if(!ul) {
-        return;
+        if(!user.isLoggedIn || user.role !== "admin") {
+            alert("Access Denied: Admin Only");
+            window.location.href = "/html/login.html";
+            return;
+        }
+    } catch (error) {
+        console.error(`Error: `, error);
+        window.location.href = "/html/login.html";
     }
 
-    input = ul.querySelector(".tag-input");
-    input.addEventListener("keydown", addTag);
+    // After authentication is done, load the user list and recipe list
+    loadUsers();
+    loadAdminRecipes();
+}
+
+async function loadUsers() {
+    try {
+        const response = await fetch('http://localhost:5000/admin/users');
+        const users = await response.json();
+
+        document.getElementById("totalUsers").innerText = users.length;
+        const tbody = document.getElementById("userTableBody");
+        tbody.innerHTML = '';
+
+        users.forEach(user => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${user.user_id}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.role}</td>
+                <td>
+                    ${user.role === 'admin' ? '<span>(Admin)</span>' : 
+                    `<button class="btn-delete" onclick="deleteUser(${user.user_id})">Delete User</button>`}
+                </td>            
+            `;
+            tbody.appendChild(tr);
+        })
+
+    } catch (error) {
+        console.error("Error loading users: ", error);
+    }
+}
+
+async function loadAdminRecipes() {
+    try {
+        const response = await fetch('http://localhost:5000/recipes');
+        const recipes = await response.json();
+
+        document.getElementById("totalRecipes").innerText = recipes.length;
+        const tbody = document.getElementById("recipeTableBody");
+        tbody.innerHTML = '';
+        
+        recipes.forEach(recipe => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${recipe.recipe_id}</td>
+                <td>${recipe.title}</td>
+                <td>${recipe.user_id}</td>
+                <td>${recipe.date_published}</td>
+                <td>
+                    <button class="btn-delete" onclick="deleteRecipe(${recipe.recipe_id})">Delete</button>
+                </td>            
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Error loading recipes: ", error);
+    }
+}
+
+window.deleteUser = async function(id) {
+    if(!confirm("Are you sure you want to delete this user? This cannot be undone.")) return;
+
+    try {
+        const response = await fetch(`http://localhost:5000/admin/user/${id}`, {
+            method: "DELETE"
+        });
+        if(response.ok) {
+            alert("User deleted successfully.");
+            loadUsers(); // refresh users table
+        }
+        else {
+            console.log(response.status);
+            alert("Error deleting user");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+window.deleteRecipe = async function(id) {
+    if(!confirm("Are you sure you want to delete this recipe?. This cannot be undone.")) return;
+
+    try {
+        const response = await fetch(`http://localhost:5000/admin/recipe/${id}`, {
+            method: "DELETE"
+        });
+        if(response.ok) {
+            alert("Recipe deleted successfully");
+            loadAdminRecipes(); // refresh the recipe list
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+window.switchTab = function (tabName) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+            
+    if(tabName === 'users') {
+        document.getElementById('usersSection').classList.remove('hidden');
+        document.getElementById('recipesSection').classList.add('hidden');
+    } else {
+            document.getElementById('usersSection').classList.add('hidden');
+            document.getElementById('recipesSection').classList.remove('hidden');
+        }
+    }
+
+window.redirectToDashboard = function() {
+    window.location.href = "/html/adminDashboard.html";
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    
+    // Check if we are on the admin dashboard page
+    if(window.location.pathname.includes("adminDashboard.html")) {
+        initAdminDashboard();
+    }
+
+    else {
+        // run auth check first
+        checkLoginStatus();
+        loadHeroSlider("Breakfast");
+        
+        displayRecipes();
+        displayRecipesByCategory("Breakfast", "slider-breakfast");
+        displayRecipesByCategory("Lunch", "slider-lunch");
+        displayRecipesByCategory("Dinner", "slider-dinner");
+        displayRecipesByCategory("Chicken", "slider-chicken");
+        displayRecipesByCategory("Vegan", "slider-vegan");
+        displayRecipesByCategory("Christmas", "slider-christmas");
+        
+        displayFavorites(); // saves.html
+        displaySearchResults(); // search.html
+
+        togglePassword();
+        dropdownCategories(); // addRecipeForm.html
+
+        ul = document.getElementById("tag-list");
+        if(!ul) {
+            return;
+        }
+
+        input = ul.querySelector(".tag-input");
+        input.addEventListener("keydown", addTag);
+    }
 });
 

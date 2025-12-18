@@ -7,6 +7,20 @@ require("dotenv").config();
 
 const router = express.Router();
 
+// MIDDLEWARE: Check Admin Status
+const isAdmin = (req, res, next) => {
+    // Check if user is logged in AND has role "admin"
+    if(req.session.user && req.session.user.role === 'admin') {
+        next();
+    }
+    else {
+        return res.status(403).json({ message: "Access Denied: Admins only."});
+    }
+}
+
+
+// AUTHENTICATION ROUTES
+
 // sign up
 router.post("/signup", async (req, res) => {
     const {
@@ -68,13 +82,17 @@ router.post("/login", async (req, res) => {
         req.session.user = {
             id: user.user_id || user.id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            role: user.role
         };
 
         // Save the session to ensure it's written before responding
         req.session.save(err => {
             if (err) return res.status(500).json({ error: "Session error" });
-            res.status(200).json({ message: "Login successful" });
+            res.status(200).json({ 
+                message: "Login successful", 
+                role: user.role
+            });
         })
 
     }
@@ -126,6 +144,8 @@ router.post('/saves', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// USER FEATURE ROUTES
 
 // Get all favorites
 router.get('/saves', async (req, res) => {
@@ -182,6 +202,7 @@ router.get("/check-auth", (req, res) => {
     if(req.session && req.session.user) {
         return res.json({
             isLoggedIn: true,
+            role: req.session.user.role
         });
     }
     else {
@@ -204,6 +225,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+// RECIPE ROUTES
+
 // post a recipe
 router.post('/add-recipe', upload.single('image'), async (req, res) => {
     try {
@@ -221,6 +244,39 @@ router.post('/add-recipe', upload.single('image'), async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Error saving recipe");
+    }
+});
+
+
+// ADMIN ROUTES
+
+// Get all users
+router.get('/admin/users', isAdmin, async(req, res) => {
+    try {
+        const users = await User.getAllUsers();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message});
+    }
+});
+
+// Delete a user
+router.delete('/admin/user/:id', isAdmin, async(req, res) => {
+    try {
+        await User.deleteUser(req.params.id);
+        res.json({ message: "User deleted by Admin successfully."});
+    } catch (err) {
+        res.status(500).json({ error: err.message});
+    }
+});
+
+// Delete a recipe
+router.delete('/admin/recipe/:id', isAdmin, async (req, res) => {
+    try {
+        await User.adminDeleteRecipe(req.params.id);
+        res.json({ message: "User deleted by Admin" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 

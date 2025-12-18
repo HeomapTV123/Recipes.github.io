@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://kit.fontawesome.com/36e94b4c48.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Top search nav -->
+    <nav class="nav-search">
+        <a href="/html/mainAfterLogin.html"><img class="logo" src="/logo/cooking_logo.webp" alt="Cooking Logo"></a>
+        <div class="nav-search-items">
+            <h1>Recipe<emp>Tine</emp>
+            </h1>
+            <p>Welcome, <emp>Admin</emp>!</p>
+        </div>
+
+        <!-- RIGHT ICON GROUP -->
+        <div class="nav-right">
+            <div class="user">
+                <a href="#" class="icon">
+                    <img src="/login/user.png" alt="avatar" class="image">
+                </a>
+            </div>
+            <div class="logout-container">
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Stats Overview -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3 id="totalUsers">0</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="totalRecipes">0</h3>
+                <p>Total Recipes</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('users')">Manage Users</button>
+            <button class="tab-btn" onclick="switchTab('recipes')">Manage Recipes</button>
+        </div>
+
+        <!-- USER SECTION -->
+        <div id="usersSection">
+            <h2 class="section-header">User Database</h2>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Users will be loaded here via JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- RECIPE SECTION -->
+        <div id="recipesSection" class="hidden">
+            <h2 class="section-header">All Posted Recipes</h2>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Author ID</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="recipeTableBody">
+                    <!-- Recipes will be loaded here via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="/js/script.js"></script>
+
+
+</body>
+
+</html>

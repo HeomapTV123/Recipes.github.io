@@ -190,6 +190,35 @@ class User {
             }
         });
     }
+
+
+    // ADMIN ONLY: Delete a user and their recipes
+    static deleteUser(userId) {
+        return new Promise((resolve, reject) => {
+            const query = `
+            DELETE FROM
+            user WHERE user_id = ?
+            `;
+            db.query(query, [userId], (err, result) => {
+                if(err) return reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    // ADMIN ONLY: Delete Any Recipe By ID
+    static adminDeleteRecipe(recipeId) {
+        return new Promise((resolve, reject) => {
+            const query = `
+            DELETE FROM
+            Recipe WHERE recipe_id = ?
+            `;
+            db.query(query, [recipeId], (err, result) => {
+                if(err) return reject(err);
+                resolve(result);
+            });
+        });
+    }
     
 }
 module.exports = User;
