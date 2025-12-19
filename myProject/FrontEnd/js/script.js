@@ -974,34 +974,6 @@ if(stepsContainer) {
     });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    
-    // run auth check first
-    checkLoginStatus();
-    loadHeroSlider("Breakfast");
-    
-    displayRecipes();
-    displayRecipesByCategory("Breakfast", "slider-breakfast");
-    displayRecipesByCategory("Lunch", "slider-lunch");
-    displayRecipesByCategory("Dinner", "slider-dinner");
-    displayRecipesByCategory("Chicken", "slider-chicken");
-    displayRecipesByCategory("Vegan", "slider-vegan");
-    displayRecipesByCategory("Christmas", "slider-christmas");
-    
-    displayFavorites(); // saves.html
-    displaySearchResults(); // search.html
-
-    togglePassword();
-    dropdownCategories(); // addRecipeForm.html
-
-    ul = document.getElementById("tag-list");
-    if(!ul) {
-        return;
-    }
-
-    input = ul.querySelector(".tag-input");
-    input.addEventListener("keydown", addTag);
-});
 
 const addRecipeForm = document.getElementById("addRecipeForm");
 
