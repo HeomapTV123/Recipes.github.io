@@ -319,7 +319,6 @@ document.addEventListener("click", async function(e) {
     }
 });
 
-
 // Get all recipes function (mainAfterLogin)
 async function getAllRecipes() {
     try {
@@ -975,113 +974,94 @@ if(stepsContainer) {
     });
 }
 
-// SUBMIT RECIPE FORM
+window.addEventListener("DOMContentLoaded", () => {
+    
+    // run auth check first
+    checkLoginStatus();
+    loadHeroSlider("Breakfast");
+    
+    displayRecipes();
+    displayRecipesByCategory("Breakfast", "slider-breakfast");
+    displayRecipesByCategory("Lunch", "slider-lunch");
+    displayRecipesByCategory("Dinner", "slider-dinner");
+    displayRecipesByCategory("Chicken", "slider-chicken");
+    displayRecipesByCategory("Vegan", "slider-vegan");
+    displayRecipesByCategory("Christmas", "slider-christmas");
+    
+    displayFavorites(); // saves.html
+    displaySearchResults(); // search.html
+
+    togglePassword();
+    dropdownCategories(); // addRecipeForm.html
+
+    ul = document.getElementById("tag-list");
+    if(!ul) {
+        return;
+    }
+
+    input = ul.querySelector(".tag-input");
+    input.addEventListener("keydown", addTag);
+});
+
 const addRecipeForm = document.getElementById("addRecipeForm");
-if(addRecipeForm) {
-    addRecipeForm.addEventListener("submit", function(e) {
+
+if (addRecipeForm) {
+    addRecipeForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        addRecipe();
-    })
-}
 
-async function addRecipe() {
-    const titleInput = document.querySelector('input[name="recipeName"]');
-    if(!titleInput.value.trim()) {
-        const error = document.getElementById("nameError");
-        error.textContent = "";
-        error.textContent = "Please enter a recipe name";
-        return;
-    }
-    else {
-        const error = document.getElementById("nameError");
-        error.textContent = "";
-    }
+        // =========================
+        // 1. CATEGORY VALIDATION
+        // =========================
+        const category = document.getElementById("category-select").value;
 
-    const categoryInput = document.getElementById("category-select");
-    if(categoryInput.value === "") {
-        const error = document.getElementById("categoryError");
-        error.textContent = "";
-        error.textContent = "Please choose a category";
-        return;
-    }
-    else {
-        const error = document.getElementById("categoryError");
-        error.textContent = "";
-    }
-
-    const prepInput = document.querySelector('input[name="recipePrepTime"]');
-    if(!prepInput.value.trim()) {
-        const error = document.getElementById("prepTimeError");
-        error.textContent = "";
-        error.textContent = "Please enter a prepping time";
-        return;
-    }
-    else {
-        const error = document.getElementById("prepTimeError");
-        error.textContent = "";
-    }
-    
-    const cookInput = document.querySelector('input[name="recipeCookTime"]');
-    if(!cookInput.value.trim()) {
-        const error = document.getElementById("cookTimeError");
-        error.textContent = "";
-        error.textContent = "Please enter a cooking time";
-        return;
-    }
-    else {
-        const error = document.getElementById("cookTimeError");
-        error.textContent = "";
-    }
-    
-    const formData = new FormData();
-    formData.append('title', titleInput.value); // backend expects 'title'
-    formData.append('prep_time', parseInt(prepInput.value) || 0) // expects 'prep_time'
-    formData.append('cook_time', parseInt(cookInput.value) || 0);
-    formData.append('servings', 1); // default 1 serving
-
-    // Map ingredients (Arrays)
-    const ingNames = document.querySelectorAll('input[name="ingredient[]"]');
-    const ingQtys = document.querySelectorAll('input[name="quantity[]"]');
-    const ingUnits = document.querySelectorAll('input[name="unit[]"]');
-
-    ingNames.forEach((input, i) => {
-        // only add if name is not empty
-        if(input.value.trim() !== "") {
-            // append with key 'ingredient' (no brackets) so Multer/Express sees an array
-            formData.append('ingredient', input.value);
-            formData.append('quantity', ingQtys[i] ? ingQtys[i].value : 0);
-            formData.append('unit', ingUnits[i] ? ingUnits[i].value : '');
+        if (!category) {
+            alert("Please choose a category before submitting the recipe.");
+            return; // ⛔ STOP submission
         }
-    });
 
-    // data.steps[i].instruction
-    const stepInputs = document.querySelectorAll('#steps-container input, #steps-container textarea');
-    stepInputs.forEach(input => {
-        if(input.name && input.value) {
-            formData.append(input.name, input.value);
-        }
-    });
+        const categories = [category];
 
-    // Map image
-    // Your HTML file input has ID "input-file" but NO name attribute. 
-    // We must grab it by ID and append it as 'image' for upload.single('image')
-    const fileInput = document.getElementById('input-file');
-    if(fileInput && fileInput.files[0]) {
-        formData.append('image', fileInput.files[0]);
-    }
+        // =========================
+        // 2. COLLECT FORM DATA
+        // =========================
+        const title = document.querySelector("[name='recipeName']").value;
+        const prep_time = document.querySelector("[name='recipePrepTime']").value;
+        const cook_time = document.querySelector("[name='recipeCookTime']").value;
 
-    // Map tags
-    // You have a global 'tags' array in your JS. 
-    // The backend doesn't save them in 'addRecipe' yet, but here is how you send them.
-    if (typeof tags !== 'undefined' && Array.isArray(tags)) {
-        // Sending as a JSON string is often safer for complex arrays in FormData
-        formData.append('tags', JSON.stringify(tags)); 
-    }
-    
-    try {
-        const response = await fetch('http://localhost:5000/add-recipe', {
+        // Ingredients
+        const ingredients = [...document.querySelectorAll(".ingredient-quantity")]
+            .map(row => {
+                const name = row.querySelector("input[name='ingredient[]']")?.value;
+                const quantity = row.querySelector("input[name='quantity[]']")?.value;
+                const unit = row.querySelector("input[name='unit[]']")?.value;
+
+                if (!name) return null;
+                return { name, quantity, unit };
+            })
+            .filter(Boolean);
+
+        // Steps
+        const steps = [...document.querySelectorAll(".cooking-step")].map(step => ({
+            instruction: step.querySelector("textarea")?.value,
+            duration: step.querySelector("input[type='number']")?.value,
+            tip: step.querySelector("input[type='text']")?.value
+        }));
+
+        // =========================
+        // 3. SEND POST REQUEST
+        // =========================
+        const response = await fetch("http://localhost:5000/recipes", {
             method: "POST",
-            body: formData
+            credentials: "include", // 🔥 REQUIRED
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                title,
+                prep_time: Number(prep_time),
+                cook_time: Number(cook_time),
+                categories,
+                ingredients,
+                steps
+            })
         });
 
         const result = await response.json();
@@ -1094,10 +1074,7 @@ async function addRecipe() {
             console.error(result);
             alert("Error: " + (result.message || "Failed to save recipe"));
         }
-    } catch (error) {
-        console.error("Network Error: ", error);
-        alert("Could not connect to server.");
-    }
+    }); 
 }
 
 // ADMIN DASHBOARD
@@ -1267,4 +1244,9 @@ window.addEventListener("DOMContentLoaded", () => {
         input.addEventListener("keydown", addTag);
     }
 });
+
+
+
+
+
 

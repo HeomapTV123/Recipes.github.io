@@ -14,6 +14,10 @@ router.get("/:id", recipeController.getRecipeById);
 router.get("/:id/steps", recipeController.getRecipeSteps);
 router.get("/:id/ingredients", recipeController.getRecipeIngredients);
 
+// ADD RECIPE (protected)
+router.post("/", recipeController.createRecipe);
+
+
 
 
 module.exports = router;
