@@ -17,7 +17,7 @@ fetch(`http://localhost:5000/recipes/${recipeId}/ingredients`)
     .then(data => {
         const ul = document.getElementById("ingredient-list");
         ul.innerHTML = data.map(i => `
-            <li>${i.quantity} ${i.unit} of ${i.name}</li>
+            <li>✓ ${i.quantity} ${i.unit} of ${i.name}</li>
         `).join("");
     });
 
@@ -34,3 +34,19 @@ fetch(`http://localhost:5000/recipes/${recipeId}/steps`)
             </div>
         `).join("");
     });
+
+// Check authentication for left arrow
+fetch('http://localhost:5000/check-auth')
+    .then(res => res.json())
+    .then(data => {
+        const leftArrow = document.getElementById("leftArrow");
+        leftArrow.onclick = function(e) {
+            e.preventDefault();
+            if(data.isLoggedIn) {
+                window.location.href = "/html/mainAfterLogin.html";
+            }
+            else {
+                window.location.href = "/html/main.html";
+            }
+        }
+    })

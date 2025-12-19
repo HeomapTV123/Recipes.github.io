@@ -220,7 +220,7 @@ if(logoutBtn) {
 // Add to favorites()
 async function addToFavorites(recipeId) {
     try {
-        const response = await fetch ('http://localhost:5000/saves', {
+        const response = await fetch ('http://localhost:5000/save', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -251,7 +251,33 @@ async function addToFavorites(recipeId) {
     }
 }
 
-// HANDLE FAVORITE BUTTON CLICKS
+async function removeFromFavorites(recipeId) {
+    try {
+        const response = await fetch (`http://localhost:5000/unsave/${recipeId}`, {
+            method: "DELETE"
+        });
+
+        const result = await response.json();
+
+        if(!response.ok) {
+            if(response.status === 401) {
+                alert(result.message);
+                window.location.href = "/html/login.html";
+                return false;
+            }
+            
+            throw new Error(result.message || result.error || "Unknown error occurred");
+        }
+        alert(result.message);
+        return true;
+
+    } catch (error) {
+        alert("Failed to delete recipe: " + error.message);
+        return false;
+    }    
+}
+
+// HANDLE FAVORITE & UNFAVORITE BUTTON CLICKS
 document.addEventListener("click", async function(e) {
     const btn = e.target.closest('.favorite-btn');
 
@@ -259,28 +285,40 @@ document.addEventListener("click", async function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-
-        console.log("Button dataset:" , btn.dataset);
         const recipeId = btn.dataset.recipeId;
-        console.log("recipeId", recipeId);
         const icon = btn.querySelector('i');
         
-        const isSuccess = await addToFavorites(recipeId);
+        // CHECK: Is the button currently active (red)?
+        const isAlreadySaved = btn.classList.contains('active');
 
-        if(isSuccess) {
-            btn.classList.toggle('active');
-
-            if(btn.classList.contains('active')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
+        if (isAlreadySaved) {
+            // 1. REMOVE FROM FAVORITES
+            const isSuccess = await removeFromFavorites(recipeId);
+            
+            if (isSuccess) {
+                // Remove visual active state
+                btn.classList.remove('active');
+                icon.classList.remove('fas'); // Solid heart
+                icon.classList.add('far');    // Empty heart
+                // Check if the URL contains "saves.html"
+                if(window.location.href.includes("saves.html")) {
+                    window.location.reload();
+                }
             }
-            else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
+        } else {
+            // 2. ADD TO FAVORITES
+            const isSuccess = await addToFavorites(recipeId);
+
+            if (isSuccess) {
+                // Add visual active state
+                btn.classList.add('active');
+                icon.classList.remove('far'); // Empty heart
+                icon.classList.add('fas');    // Solid heart
             }
         }
     }
 });
+
 
 // Get all recipes function (mainAfterLogin)
 async function getAllRecipes() {
@@ -379,8 +417,8 @@ async function displayRecipes() {
             ? totalTime + " minutes" 
             : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
         card.innerHTML = `
-            <div style="position: relative;" onclick="openRecipe(${recipe.recipe_id})">
-                <a href="#" class="recipe-link">
+            <div style="position: relative;">
+                <a href="#" class="recipe-link" onclick="openRecipe(${recipe.recipe_id})">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
                     <p>${timeDisplay}</p> 
@@ -461,8 +499,8 @@ async function displayFavorites() {
             : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
         // Set the inner HTML
         card.innerHTML = `
-            <div style="position: relative;" onclick="openRecipe(${recipe.recipe_id})">
-                <a href="#" class="recipe-link">
+            <div style="position: relative;">
+                <a href="#" class="recipe-link" onclick="openRecipe(${recipe.recipe_id})">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                     <h3>${recipe.title}</h3>
                     <p>${timeDisplay}</p> 
@@ -532,9 +570,9 @@ async function loadHeroSlider(category) {
                     : (Math.round(totalTime / 60) + (Math.round(totalTime / 60) > 1 ? " hours" : " hour"));
 
                 return `
-                <div class="hero-card" onclick="openRecipe(${recipe.recipe_id})">
-                    <img src="${recipe.image_url}">
-                    <div class="hero-info">
+                <div class="hero-card">
+                    <img src="${recipe.image_url}" onclick="openRecipe(${recipe.recipe_id})">
+                    <div class="hero-info" onclick="openRecipe(${recipe.recipe_id})">
                         <h3>${recipe.title}</h3>
                         <p>${timeDisplay}</p>
                     </div>
@@ -695,6 +733,11 @@ function updateUI(isLoggedIn, role) {
         adminDashboardBtn.innerHTML = `
             <button class="dashboard-btn" onclick="redirectToDashboard()">Dashboard</button>        
         `;
+        loginLink.style.display = "none";
+        signUpLink.style.display = "none";
+        logOutLink.style.display = "block";
+        favBtn.style.display = "block";
+        userIcon.style.display = "block";
     }
     else if(isLoggedIn) {
         loginLink.style.display = "none";

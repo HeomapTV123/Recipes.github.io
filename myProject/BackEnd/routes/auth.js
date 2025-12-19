@@ -115,8 +115,10 @@ router.post("/logout", (req, res) => {
     });
 });
 
+// USER FEATURE ROUTES
+
 // Add to saves (favorites)
-router.post('/saves', async (req, res) => {
+router.post('/save', async (req, res) => {
     // 1. Check if the user is actually logged in
     if (!req.session.user) {
         return res.status(401).json({ message: "You must be logged in to save recipes." });
@@ -145,7 +147,30 @@ router.post('/saves', async (req, res) => {
     }
 });
 
-// USER FEATURE ROUTES
+// Delete a favorite
+router.delete('/unsave/:id', async (req, res) => {
+
+    if(!req.session.user) {
+        return res.status(401).json({ message: "You must be logged in to unfavorite this recipe."});
+    }
+
+    try {
+        const userId = req.session.user.id;
+
+        const recipeId = req.params.id;
+
+        if (!recipeId) {
+            return res.status(400).json({ message: "Recipe ID is required." });
+        }
+
+        await User.removeFromSaves(userId , recipeId);
+
+        res.json({ success: true, message: "Deleted from favorites" });
+    } catch (error) {
+        console.error(error); // Good to log on server side
+        res.status(500).json({ error: error.message });        
+    }
+});
 
 // Get all favorites
 router.get('/saves', async (req, res) => {

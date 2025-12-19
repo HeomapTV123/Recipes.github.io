@@ -59,6 +59,19 @@ class User {
         });
     }
 
+    static removeFromSaves(userId, recipeId) {
+        return new Promise((resolve, reject) => {
+            const query = `
+            DELETE FROM favorite 
+            WHERE user_id = ? AND recipe_id = ?
+            `;
+
+            db.query(query, [userId, recipeId], (err, result) => {
+                if(err) return reject(err);
+                resolve(result);
+            })
+        })
+    }
 
     static getAllSaves(userId) {
         return new Promise((resolve, reject) => {

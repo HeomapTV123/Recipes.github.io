@@ -924,9 +924,22 @@ body {
 }
 
 /* recipe.html */
+.left-arrow {
+    text-decoration: none;
+    color: #000;
+    font-size: 30px;
+    position: absolute;
+    left: 40px;
+    cursor: pointer;
+}
+
 .recipe-page-container {
     max-width: 800px;
     margin: auto;
+}
+
+.recipe-title {
+    text-align: center;
 }
 
 .recipe-hero {
@@ -936,11 +949,43 @@ body {
 }
 
 .step-card {
-    background: #fff3e6;
+    background: #ffffff;
     padding: 15px;
     margin: 10px 0;
     border-radius: 12px;
 }
+
+.list-ingredient {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.ingredients {
+    display: flex;
+}
+
+.list-ingredient li {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    transition: 0.3s;
+}
+
+
+.list-ingredient li:last-child {
+    border-bottom: none;
+}
+
+.list-ingredient li:hover {
+    background: #bebebe;
+}
+
 
 /* addRecipeForm.html */
 .add-recipe-form-container {
