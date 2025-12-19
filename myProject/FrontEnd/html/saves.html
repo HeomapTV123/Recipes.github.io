@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://kit.fontawesome.com/36e94b4c48.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Top search nav -->
+    <nav class="nav-search">
+        <a href="/html/mainAfterLogin.html"><img class="logo" src="/logo/cooking_logo.webp" alt="Cooking Logo"></a>
+    <div class="nav-search-items">
+        <h1>Recipe<emp>Tine</emp></h1>
+            <form>
+                <div class="search">
+                    <i class="search-icon fa-solid fa-magnifying-glass"></i>
+                    <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
+                </div>
+            </form>
+                <p>The website where you can find <emp>1000+</emp> recipes shared by people around the world.</p>
+    </div>
+
+        <!-- RIGHT ICON GROUP -->
+    <div class="nav-right">
+        <a href="#" class="fav-btn"><i class="fas fa-star"></i></a>
+
+        <div class="user">
+            <a href="#" class="icon">
+                <img src="/login/user.png" alt="avatar" class="image">
+            </a>
+        </div>
+
+        <div class="logout-container">
+            <button class="logout-btn">Logout</button>
+        </div>
+    </div>
+    </nav>
+
+
+    <!-- Category nav -->
+    <nav class="nav-select">
+        <ul class="menu">
+            <li>
+                <a href="#">Meals</a>
+                <ul class="dropdown">
+                    <li><a href="#" class="category-link" data-category="Breakfast">Breakfast</a></li>
+                    <li><a href="#" class="category-link" data-category="Lunch">Lunch</a></li>
+                    <li><a href="#" class="category-link" data-category="Dinner">Dinner</a></li>
+                    <li><a href="#" class="category-link" data-category="Snacks">Snacks</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Meat & Seafood</a>
+                <ul class="dropdown">
+                    <li><a href="#" class="category-link" data-category="Chicken">Chicken Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Beef">Beef Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Pork">Pork Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Shrimp">Shrimp Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Salmon">Salmon Recipes</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Healthy & Diets</a>
+                <ul class="dropdown">
+                    <li><a href="#" class="category-link" data-category="Keto">Keto Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Vegetarian">Vegetarian Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Vegan">Vegan Recipes</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Holidays</a>
+                <ul class="dropdown">
+                    <li><a href="#" class="category-link" data-category="Christmas">Christmas Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Thanksgiving">Thanksgiving Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Easter">Easter Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="New Year">New Year Recipes</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Seasonal</a>
+                <ul class="dropdown">
+                    <li><a href="#" class="category-link" data-category="Spring">Spring Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Summer">Summer Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Fall">Fall Recipes</a></li>
+                    <li><a href="#" class="category-link" data-category="Winter">Winter Recipes</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="saves">
+        <h1>Saves</h1>
+        <div class="saved-recipes-container" id="savedRecipesContainer">
+            
+        </div>
+    </section>
+    <script type="module" src="../js/script.js"></script>
+
+
+</body>
+</html>

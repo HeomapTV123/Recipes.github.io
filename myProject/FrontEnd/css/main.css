@@ -1,0 +1,1352 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9eee3;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+}
+
+
+/* Hide horizontal scrollbars */
+.recipe-slider::-webkit-scrollbar,
+.hero-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- Top nav (logo + search + login) --- */
+.nav-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff3e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 15px 40px;
+}
+
+.nav-search-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.nav-search-items h1 {
+    padding: 15px;
+    font-size: 32px;
+}
+
+.nav-search-items emp{
+    color: orangered;
+    font-weight: bold;
+}
+
+.nav-search-items p {
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 10px;
+}
+
+
+.logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.search:focus-within {
+    box-shadow: 0 0 8px rgba(255,100,50,0.5);
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 16px;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: rgba(0,0,0,0.4);
+}
+
+.login {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.login div {
+    border: 1px solid #e32a2a;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px 18px;
+    text-decoration: none;
+    color: #e32a2a;
+    font-weight: 600;
+}
+
+.login div:hover {
+    background-color: #e32a2a;
+}
+
+.login div:hover a {
+    color: white;
+}
+
+/* --- Menu bar --- */
+.nav-select {
+    background-color: #fff7f0;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    padding: 10px 40px;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu > li > a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu > li > a:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+/* --- Dropdown styling --- */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background-color: #fff;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 10;
+    animation: fadeIn 0.25s ease-in;
+}
+
+.dropdown li a {
+    display: block;
+    padding: 10px 18px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown li a:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+/* --- Show dropdown on hover --- */
+.menu li:hover .dropdown {
+    display: block;
+}
+
+/* --- Animation --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================
+   HERO SLIDER
+============================ */
+.hero-slider-section {
+    margin: 40px auto;
+    padding: 0 40px;
+    position: relative;
+}
+
+#hero-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.hero-card {
+    min-width: 330px;
+    height: 220px;
+    background: #eee;
+    border-radius: 14px;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.hero-card:hover .favorite-btn {
+    display: flex;
+}
+
+.hero-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+}
+
+
+/* ==========================
+   RECIPE SLIDER CONTAINER
+   ========================== */
+.recipe-slider-section {
+    position: relative;
+    padding: 30px 50px;
+}
+
+.slider-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #d43f3a;
+    text-align: center;
+}
+
+/* Slider wrapper */
+.recipe-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-behavior: smooth;
+    padding-bottom: 15px;
+}
+
+.recipe-slider::-webkit-scrollbar {
+    display: none; /* hide scrollbar */
+}
+
+/* Recipe card */
+.recipe-card {
+    position: relative;
+    display: block;
+    min-width: 260px;
+    max-height: 260px;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    transition: 0.3s;
+    text-decoration: none;
+    color: black;
+}
+
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    color: orangered;
+}
+
+.recipe-card:hover .favorite-btn {
+    display: flex;
+}
+
+/* Image */
+.recipe-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Text info */
+.recipe-info {
+    margin-top: 10px;
+}
+
+.recipe-info h3 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.recipe-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white; /* White circle background */
+    border: none;
+    border-radius: 50%; /* Make it round */
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Small shadow for depth */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    z-index: 10; /* Ensure it sits on top of the image */
+}
+
+.favorite-btn i {
+    color: red;
+    font-size: 16px;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Slider buttons */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #e32a2a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.slider-btn:hover {
+    background: #c92525;
+}
+
+.slider-btn.left {
+    left: 10px;
+}
+
+.slider-btn.right {
+    right: 10px;
+}
+
+/* ==========================
+   LOGIN PAGE
+   ========================== */
+
+.user-icon {
+    width:20px; 
+    height:20px; 
+    opacity:0.8;
+    margin-right: 10px;
+}
+
+.password-icon {
+    width:20px; 
+    height:20px; 
+    opacity:0.8;
+    margin-right: 10px;
+}
+
+.login-page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+.login-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.login-title h2 {
+    color: black;
+    font-size: xxx-large;
+    font-weight: 800;
+    padding-bottom: 10px;
+}
+
+.login-title p {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.login-title p emp{
+    color: orangered;
+    font-weight: bolder;
+}
+
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 17px;
+    padding-right: 40px; 
+}
+
+.toggle-password {
+    position: absolute;
+    cursor: pointer;
+    color: #888;
+    right: 25px; /* 10px margin of input + 15px buffer inside */
+    /* 4. Center vertically */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* Ensures it sits on top of the input */
+}
+
+.toggle-password .fa-eye-slash {
+    display: none;
+}
+
+#passwordContainer.active .fa-eye {
+    display: none;
+}
+
+#passwordContainer.active .fa-eye-slash {
+    display: inline-block;
+}
+
+
+.login-btn {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #e32a2a;
+    padding: 20px;
+    color:#e32a2a;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.login-btn:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+
+.remember-me {
+    text-align: left;
+}
+
+.register-link {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+
+.register-link a{
+    border-style: none;
+    text-decoration: none;
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+    color: blue;
+}
+
+.register-link a:hover{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* ==========================
+   SIGN UP PAGE
+   ========================== */
+
+.signup-page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+}
+
+.signup-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+.signup-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.signup-title h2 {
+    color: black;
+    font-size: xxx-large;
+    font-weight: 800;
+    padding-bottom: 10px;
+}
+
+.signup-title p {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.signup-title p emp{
+    color: orangered;
+    font-weight: bolder;
+}
+
+
+.signup-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.signup-btn {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #e32a2a;
+    padding: 20px;
+    color:#e32a2a;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.signup-btn:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+.homepage-link {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 3px solid #bbb;
+}
+
+.homepage-link a{
+    text-decoration: none;
+    color: orangered;
+}
+
+.homepage-link a:hover{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* ==========================
+   MAIN AFTER LOGIN PAGE
+   ========================== */
+
+/* Container for the user icon */
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    /* Make it circular */
+    border-radius: 50%;
+    overflow: hidden;
+    /* Optional background */
+    background-color: #f0f0f0;
+    /* Cursor to show it's clickable */
+    cursor: pointer;
+    /* Smooth hover animation */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* User icon hover effect */
+.user:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon link wrapper */
+.user .icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* The avatar image */
+.user .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fa-star {
+    color: transparent;
+    -webkit-text-stroke: 1px black; 
+    font-size: 18px;
+}
+
+.fa-star:hover {
+    color: gold;
+}
+
+.user-container {
+    display: flex;
+    flex-direction: row;
+    background-color: red;
+    width: auto;
+    justify-content: center;
+}
+
+/* Center container expands */
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* Right-side container */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* space between star, user, logout */
+}
+
+/* Add Recipe button */
+.add-recipe-btn {
+    display: block;
+    background: #fff;
+    border: 2px solid #e32a2a;
+    border-radius: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #e32a2a;
+    font-weight: bold;
+    transition: 0.3s;
+    text-decoration: none;    
+}
+
+.add-recipe-btn:hover {
+    background: #e32a2a;
+    color: white;
+}
+
+/* Logout button */
+.logout-btn {
+    padding: 10px 20px;
+    border-radius: 15px;
+    background: #fff;
+    color: #e32a2a;
+    border: 2px solid #e32a2a;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.logout-btn:hover {
+    background: #e32a2a;
+    color: white;
+}
+
+/* Recipe container for recipe block */
+.recipes {
+    padding: 50px 0;
+}
+
+.recipes h1{
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 40px;
+    font-family: 'Georgia', serif;
+}
+
+
+.recipe-container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    column-gap: 10px;
+    row-gap: 30px;
+
+}
+
+.recipe-link {
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+}
+
+.recipe-link:hover {
+    transform: translateY(-5px);
+    color: orangered;
+}
+/* News grid (mainAfterLogin) */
+.news-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.article-card {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    transition: 0.3s;
+}
+
+.article-card:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    color: orangered;
+}
+
+.article-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-content {
+    padding: 15px 0;
+}
+
+.category {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    color: #000;
+    margin-left: 10px;
+}
+
+.headline {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0 10px;
+}
+
+.article-card.featured {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    background: white;
+}
+
+.article-card.featured .article-image {
+    flex: 2;
+    height: 350px;
+}
+
+.chefs {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Georgia', serif; /* Use a Serif font to match the image headers */
+}
+
+.chefs h1 {
+    text-align: center;
+}
+
+/* Grid Layout for the Cards */
+.chef-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    column-gap: 60px; /* Space between left and right column */
+    row-gap: 0; /* Vertical gap handled by padding/border */
+}
+
+/* Individual Card Styling */
+.chef-card {
+    display: flex; /* Flexbox puts image next to text */
+    align-items: flex-start;
+    padding: 30px 0;
+    border-bottom: 1px solid #e0e0e0; /* The separator line */
+}
+
+/* Image Styling */
+.chef-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Makes the image a circle */
+    object-fit: cover;
+    margin-right: 25px;
+    flex-shrink: 0; /* Prevents image from squishing */
+}
+
+/* Text Content Styling */
+.chef-info h3 {
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    color: #000;
+}
+
+.chef-bio {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+}
+
+
+/* ==========================
+   SAVE PAGE
+   ========================== */
+.saves {
+    padding: 50px 0;
+}
+
+.saves h1{
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+
+.saved-recipes-container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    column-gap: 10px;
+    row-gap: 30px;
+
+}
+
+/* recipe.html */
+.recipe-page-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.recipe-hero {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.step-card {
+    background: #fff3e6;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+}
+
+/* addRecipeForm.html */
+.add-recipe-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Georgia', serif;
+    background: #fff;
+    border-radius: 20px;
+}
+
+.add-recipe-form-title {
+    padding: 20px;
+    text-align: center;
+}
+
+#recipeLabel label{
+    position: absolute;
+    top: -5px;
+    left: 15px;
+}
+
+.input-box select{
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 17px;
+    padding-right: 40px; 
+}
+
+.submit-btn {
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #e32a2a;
+    padding: 20px;
+    color:#e32a2a;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #e32a2a;
+    color: white;
+}
+
+.upload-image {
+    width: 100%;
+    min-height: 250px; /* Gives it a box shape */
+    margin: 20px 0;
+    background: #f8f8f8; /* Light gray background */
+    border: 2px dashed #ccc; /* Classic upload dashed line */
+    border-radius: 20px; /* Matches your form radius */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative; /* Essential for the label overlay */
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.upload-image:hover {
+    border-color: #e32a2a; /* Changes border to your theme red */
+    background: #fff5f5; /* Very faint red tint */
+}
+
+#input-file {
+    display: none;
+}
+
+#drop-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 10; /* Ensures it sits on top */
+}
+
+#img-view {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-view img {
+    width: 80px; 
+    height: auto;
+    margin-bottom: 15px;
+    opacity: 0.7; /* Slight transparency for style */
+}
+
+#img-view p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+#img-view span {
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    color: #777;
+}
+
+.unit-types {
+    display: flex;
+    flex-direction: column;
+}
+
+.unit-types h3{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.unit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2px solid #000;
+}
+
+.units {
+    padding: 20px;
+}
+
+.ingredient-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-list h3 {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.ingredient-quantity {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.ingredient {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient label {
+    margin-bottom: 5px;
+}
+
+.quantity {
+    display: flex;
+    flex-direction: column;
+}
+
+.quantity label {
+    margin-bottom: 5px;
+}
+
+.unit {
+    display: flex;
+    flex-direction: column;
+}
+
+.unit label {
+    margin-bottom: 5px;
+}
+
+.quantity-unit {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.add-ingredient-btn {
+    padding: 10px;
+    background: #fff7f0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    border-color: #e32a2a;
+    color:#e32a2a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.add-ingredient-btn:hover {
+    color: white;
+    background: #e32a2a;
+}
+
+/* Tags */
+.recipe-tag {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.input-box li {
+    display: flex;
+    align-items: center;
+}
+
+.input-box ul {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 20px;
+    border: 1px solid #000;
+    padding-left: 15px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 17px;
+    padding-right: 40px; 
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input-box ul li {
+    list-style: none;
+    padding: 5px 8px 5px 10px;
+    background: #f2f2f2;
+    margin: 4px 3px;
+    border-radius: 20px;
+    border: 1px solid #e3d1e1;
+}
+
+.input-box ul li i{
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
+    background: #dfdfdf;
+    border-radius: 50%;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #808080;
+    cursor: pointer;
+}
+
+.input-box ul li i:hover{
+    background: #979797;
+    color: #000;
+}
+
+.input-box ul input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    margin-left: -5px;
+}
+
+/* Delete ingredient button */
+.delete-ingredient-btn {
+    background: red;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+    padding: 10px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.delete-ingredient-btn:hover {
+    background: rgb(193, 0, 0);
+    font-weight: bolder;
+}
+
+/* Add cooking step form */
+/* Container for the whole step block */
+.ingredient-steps {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-steps h3 {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.cooking-step {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Header section with "Step X" and Delete button */
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.step-header h4 {
+    margin: 0;
+    color: #333;
+    font-weight: 700;
+}
+
+.delete-step-btn {
+    color: white;
+    border: 1px solid #dc3545;
+    background: red;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.delete-step-btn:hover {
+    background: rgb(193, 0, 0);
+    color: white;
+}
+
+/* Form inputs styling */
+.step-form-group {
+    margin-bottom: 15px;
+}
+
+.step-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.step-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+    font-family: inherit;
+}
+
+.step-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Layout for Duration and Tip row */
+.step-row {
+    display: flex;
+    gap: 20px;
+}
+
+.step-col-small {
+    flex: 1; /* Takes up 1 part of space */
+}
+
+.step-col-large {
+    flex: 2; /* Takes up 2 parts of space */
+}
+
+.add-step-btn {
+    padding: 10px;
+    background: #fff7f0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    border-color: #e32a2a;
+    color:#e32a2a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.add-step-btn:hover {
+    color: white;
+    background: #e32a2a;
+}

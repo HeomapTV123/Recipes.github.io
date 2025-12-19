@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://kit.fontawesome.com/36e94b4c48.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Top search nav -->
+    <nav class="nav-search">
+        <a href="/html/mainAfterLogin.html"><img class="logo" src="/logo/cooking_logo.webp" alt="Cooking Logo"></a>
+        <div class="nav-search-items">
+            <h1>Recipe<emp>Tine</emp>
+            </h1>
+            <form>
+                <div class="search">
+                    <i class="search-icon fa-solid fa-magnifying-glass"></i>
+                    <input type="search" class="search-input" placeholder="Find recipes, ingredients...">
+                </div>
+            </form>
+            <p>The website where you can find <emp>1000+</emp> recipes shared by people around the world.</p>
+        </div>
+
+        <!-- RIGHT ICON GROUP -->
+        <div class="nav-right">
+            <a href="" class="fav-btn"><i class="fas fa-star"></i></a>
+
+            <div class="user">
+                <a href="#" class="icon">
+                    <img src="/login/user.png" alt="avatar" class="image">
+                </a>
+            </div>
+            <div class="logout-container">
+                <button class="logout-btn" style="display: none">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+
+    
+
+    <h1>Search Results</h1>
+    <h3 id="search-term-display"></h3>
+
+    <div class="recipe-container" id="results-container">
+        Loading...
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

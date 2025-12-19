@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://kit.fontawesome.com/36e94b4c48.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="signup-page-container">
+        <div class="signup-card">
+        <div class="signup-title">
+            <header>
+                <h2>Create An Account</h2>
+            </header>
+
+            <section>
+                <p>Get started on viewing, uploading, and sharing your very own recipes!</p>
+            </section>
+        </div>
+
+        <div class="signup-form-container">
+            <form action="" id="signUpForm">
+                <div class="input-box">
+                  <label for="email"></label>
+                  <img src="/login/email.png" class="user-icon">
+                  <input type="email" name="email" id="emailInput" aria-describedby="emailHelpId" placeholder="Enter email">
+                </div>
+                  <div id="emailError"></div>
+
+                <div class="input-box">
+                    <label for="username"></label>
+                    <img src="/login/user.png" class="user-icon">
+                    <input type="text" name="username" id="usernameInput" aria-describedby="helpId" placeholder="Enter Username">
+                </div>
+                    <div id="usernameError"></div>               
+                <div class="input-box" id="passwordContainer">
+                    <label for="password"></label>
+                    <img src="/login/password.png" class="password-icon">
+                    <input type="password"  class="password" name="password" id="passwordInput" placeholder="Password"/>
+                    <span class="toggle-password" id="toggleBtn">
+                        <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
+                        <i class="fas fa-eye-slash"></i>
+                    </span>
+                </div>
+                    <div id="passwordError"></div>
+                
+                <div class="submit-box">
+                     <button type="submit" class="signup-btn">Create Account</button>
+                </div>
+
+                <div class="remember-me">
+                    <label for="remember-me"></label>
+                        <input type="checkbox" class="remember-me" name="" id="" value="checkedValue" unchecked>
+                        Remember me
+                </div>
+
+                
+            </form>
+            <div class="register-link" id="signup-link">
+                    <p>Already have an account?
+                        <a href="/html/login.html">Sign in</a>
+                    </p>
+            </div>
+
+            <div class="homepage-link">
+                <p>Go back to 
+                    <a href="/html/main.html">homepage</a>
+                </p>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script type="module" src="/js/script.js"></script>
+
+</body>
+</html>
