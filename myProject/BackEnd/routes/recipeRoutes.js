@@ -14,6 +14,9 @@ router.get("/:id", recipeController.getRecipeById);
 router.get("/:id/steps", recipeController.getRecipeSteps);
 router.get("/:id/ingredients", recipeController.getRecipeIngredients);
 
+// Tags
+router.get("/:id/tag", recipeController.getTagsByRecipe);
+
 // ADD RECIPE (protected)
 router.post("/", recipeController.createRecipe);
 

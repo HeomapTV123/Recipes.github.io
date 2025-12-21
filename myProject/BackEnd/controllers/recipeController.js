@@ -30,6 +30,11 @@ exports.getAllCategories = async (req, res) => {
     res.json(rows);
 };
 
+exports.getTagsByRecipe = async (req, res) => {
+    const [rows] = await Recipe.getTagsByRecipe(req.params.id);
+    res.json(rows);
+}
+
 exports.createRecipe = async (req, res) => {
     try {
         // 1. Must be logged in

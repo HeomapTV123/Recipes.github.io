@@ -1032,7 +1032,8 @@ if (addRecipeForm) {
                 cook_time: Number(cook_time),
                 categories,
                 ingredients,
-                steps
+                steps,
+                tags: tags
             })
         });
 

@@ -11,6 +11,22 @@ fetch(`http://localhost:5000/recipes/${recipeId}`)
         document.getElementById("recipe-image").alt = recipe.title;
     });
 
+// Load recipe tags
+fetch(`http://localhost:5000/recipes/${recipeId}/tag`)
+    .then(res => res.json())
+    .then(tags => {
+        const tagContainer = document.getElementById("recipe-tag");
+
+        if(!tags || tags.length === 0) {
+            tagContainer.innerHTML = "No tags";
+            return;
+        }
+
+        tagContainer.innerHTML = tags.map(tag => `
+            <span> ${tag.name} </span>
+            `).join("");
+    });
+
 // Load ingredient list
 fetch(`http://localhost:5000/recipes/${recipeId}/ingredients`)
     .then(res => res.json())

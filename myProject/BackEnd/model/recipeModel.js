@@ -45,6 +45,17 @@ exports.getByCategory = (name) => {
 exports.getAllCategories = () => {
     return db.promise().query("SELECT * FROM Category");
 };
+
+// Get tags by recipe
+exports.getTagsByRecipe = (id) => {
+    return db.promise().query(`
+        SELECT t.name
+        FROM Tag t
+        JOIN RecipeTag rt ON t.tag_id = rt.tag_id
+        WHERE rt.recipe_id = ?
+    `, [id]);
+};
+
 //Create new Recipe
 exports.createRecipe = async ({ userId, title, description, prep_time, cook_time, image_url }) => {
     const [result] = await db.promise().query(
